@@ -12,7 +12,13 @@ jobs:
       steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
       - name: Build
         id: build
         uses: cloudposse/github-action-docker-build-push@main
@@ -23,3 +29,4 @@ jobs:
           login: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           platforms: linux/amd64,linux/arm64
+          push: true
