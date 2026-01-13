@@ -4,8 +4,8 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: h-aliuia
-
+  IMAGE_NAME: ${{ github.repository }}
+  
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
