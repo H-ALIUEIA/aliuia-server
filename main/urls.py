@@ -17,11 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path("", include("pages.urls")),
     path("api/", include("api.urls")),
 ]
+
+if settings.ADMIN_ENABLED is True:
+    urlpatterns += [path('admin/', admin.site.urls),]
 
 urlpatterns += staticfiles_urlpatterns()
