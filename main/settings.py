@@ -28,6 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+ADMIN_ENABLED = DEBUG
 
 ALLOWED_HOSTS = ['*']
 
