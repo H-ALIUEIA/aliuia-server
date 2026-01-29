@@ -9,5 +9,8 @@ from django.shortcuts import redirect
 def qr_reader(request):
     if(request.Android):
         return redirect("https://play.google.com/store/apps/details?id=aenu.aps3e&hl=en")
-    #else:
-    #    return redirect('home_redirect')
+    else:
+        return redirect('home_redirect')
+
+def home(request):
+ return render(request, "index.html")

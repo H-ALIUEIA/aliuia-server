@@ -8,3 +8,4 @@ django-six==1.0.5
 djangorestframework==3.16.1
 sqlparse==0.5.5
 django-environ
+whitenoise
