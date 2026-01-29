@@ -724,15 +724,15 @@ quotesource.addEventListener("click", e=> {
     	quotesourcetoggle = 1;
         quote_text1.style.display = 'none';
         quote_hr.style.display = 'none';
-        quote_text2.innerHTML = quotes[randomint].source.replaceAll("\\n","\r\n");
+        quote_text2.innerHTML = quotes[randomint].source.replaceAll("\\n","<br>");
     }
     else
     {
     	quotesourcetoggle = 0;
         quote_text1.style.display = 'block';
         quote_hr.style.display = 'block';
-        quote_text1.innerHTML = quotes[randomint].author.replaceAll("\\n","\r\n");
-        quote_text2.innerHTML = quotes[randomint].description.replaceAll("\\n","\r\n");
+        quote_text1.innerHTML = quotes[randomint].author.replaceAll("\\n","<br>");
+        quote_text2.innerHTML = quotes[randomint].description.replaceAll("\\n","<br>");
     }
 });
 quotefavorites.addEventListener("click", e=> {
@@ -1357,8 +1357,8 @@ function assignquotes()
 	    if(isSubset(cookiemonster.get('quoteviewed'), quotesids))
 	    {
 	        randomint = getRandomInt(quotes.length);
-	        quote_text1.textContent = quotes[randomint].author;
-	        quote_text2.textContent = quotes[randomint].description;
+            quote_text1.innerHTML = quotes[randomint].author.replaceAll("\\n","<br>");
+            quote_text2.innerHTML = quotes[randomint].description.replaceAll("\\n","<br>");
 	    }
 	    else
 	    {
@@ -1370,8 +1370,8 @@ function assignquotes()
 	                break;
 	            }
 	        }
-	        quote_text1.textContent = quotes[randomint].author;
-	        quote_text2.textContent = quotes[randomint].description;
+		    quote_text1.innerHTML = quotes[randomint].author.replaceAll("\\n","<br>");
+		    quote_text2.innerHTML = quotes[randomint].description.replaceAll("\\n","<br>");
 	        try
 			{
 			    cookiemonster.append('quoteviewed', quotes[randomint].id, 7300);
@@ -1387,8 +1387,8 @@ function assignquotes()
 	catch(err)
 	{
 	    randomint = getRandomInt(quotes.length);
-	    quote_text1.textContent = quotes[randomint].author;
-        quote_text2.textContent = quotes[randomint].description;
+        quote_text1.innerHTML = quotes[randomint].author.replaceAll("\\n","<br>");
+        quote_text2.innerHTML = quotes[randomint].description.replaceAll("\\n","<br>");
         try
 		{
 		    cookiemonster.append('quoteviewed', quotes[randomint].id, 7300);
