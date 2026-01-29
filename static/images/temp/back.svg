@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:android="http://schemas.android.com/apk/res/android" android:autoMirrored="true" android:tint="#FFFFFF" height="960" width="960" xmlns="http://www.w3.org/2000/svg">
+    <path d="M400,720L160,480L400,240L456,298L314,440L800,440L800,520L314,520L456,662L400,720Z" fill="#FFFFFF"/>
+</svg>

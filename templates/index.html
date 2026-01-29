@@ -1,0 +1,553 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el-GR">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <title>Η Αλήθεια</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'toastify.min.css' %}">
+    <link href="{% static 'video-js.css' %}" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <style>
+        @font-face {
+			font-family: 'Glyphter';
+			src: url('{% static "images/fonts/Glyphter.eot" %}');
+			src: url('{% static "images/fonts/Glyphter.eot" %}?#iefix') format('embedded-opentype'),
+				 url('{% static "images/fonts/Glyphter.woff" %}') format('woff'),
+				 url('{% static "images/fonts/Glyphter.ttf" %}') format('truetype'),
+				 url('{% static "images/fonts/Glyphter.svg" %}#Glyphter') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+		[class*='iconu-']:before {
+			display: inline-block;
+		    font-family: 'Glyphter';
+		    font-style: normal;
+		    font-weight: normal;
+		    line-height: 1;
+		    -webkit-font-smoothing: antialiased;
+		    -moz-osx-font-smoothing: grayscale
+		}
+		.iconu-baseline_apps_24:before{content:'\0041';}
+		.iconu-filmshorts:before{content:'\0042';}
+		.iconu-lessons:before{content:'\0043';}
+		.iconu-quote:before{content:'\0044';}
+		.iconu-refresh:before{content:'\0045';}
+		.iconu-newspaper:before{content:'\0046';}
+    </style>
+	<div style="display: none; overflow: hidden;" id="newsdiv">
+        <div class="quote-container2">
+          <div class="quote-container3">
+            <p class="comingsoon">Έρχεται σύντομα</p>
+          </div>
+        </div>
+    </div>
+    <div id="quotesdiv" style="position: fixed; width: 100%; overflow: hidden;">
+      <div class="quote-container1">
+        <header class="quote-header">
+          <div id="favorites" class="quote-header-part1">
+            <img id="bookmark_image" src="{% static 'images/quote_bookmark.png' %}" class="quote-header-image"/>
+            <img style="display: none;" id="bookmark_image_full" src="{% static 'images/quote_bookmark_full.png' %}" class="quote-header-image"/>
+          </div>
+          <select id="quoteoptions" onChange="quotechange(this.selectedIndex)">
+            <option value="ΟΛΕΣ ΟΙ ΚΑΤΗΓΟΡΙΕΣ">ΟΛΕΣ ΟΙ ΚΑΤΗΓΟΡΙΕΣ</option>
+            <option value="ΑΓΙΑ ΓΡΑΦΗ">ΑΓΙΑ ΓΡΑΦΗ</option>
+            <option value="ΣΥΝΩΜΟΣΙΑ">ΣΥΝΩΜΟΣΙΑ</option>
+            <option value="ΤΑΙΝΙΕΣ/ΣΕΙΡΕΣ">ΤΑΙΝΙΕΣ/ΣΕΙΡΕΣ</option>
+            <option value="ΤΑΙΝΙΕΣ/ΣΕΙΡΕΣ">ΑΓΑΠΗΜΕΝΑ</option>
+          </select>
+          <div class="quote-header-part3">
+            <img id="quotesource" src="{% static 'images/source.png' %}" class="quote-header-image"/>
+          </div>
+        </header>
+        <div class="quote-container2">
+          <div class="quote-container3">
+            <span id="quote_text1" class="quote-text1">Text</span>
+            <hr id="quote_hr">
+            <span id="quote_text2" class="quote-text2">Text</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: none; overflow: hidden;" id="shortsdiv">
+        <div class="quote-container2">
+          <div class="quote-container3">
+            <p class="comingsoon">Έρχεται σύντομα</p>
+          </div>
+        </div>
+    </div>
+    <div style="display: none;" id="lessonsdiv">
+    	<center>
+    	<div id="prophecies" class="card">
+    	    <center><img class="prophimage" src="{% static 'images/prophecyicon4.png' %}"></center>
+    	    <p class="prophtext">Μάθε της προφητείες της Αγίας Γραφής σε 7 ημέρες</p>
+    	    <center><img style="display: none;" id="prophwalkimg1" class="prophimage" src="{% static 'images/day1.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg2" class="prophimage" src="{% static 'images/day2.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg3" class="prophimage" src="{% static 'images/day3.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg4" class="prophimage" src="{% static 'images/day4.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg5" class="prophimage" src="{% static 'images/day5.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg6" class="prophimage" src="{% static 'images/day6.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg7" class="prophimage" src="{% static 'images/day7.png' %}"></center>
+    	    <center><img style="display: none;" id="prophwalkimg8" class="prophimage" src="{% static 'images/day8.png' %}"></center>
+    	    <p class="prophtext">Δες λεπτομέρειες ></p>
+    	</div>
+    	<div id="unlearn" class="card3">
+			<h2 class="prophtext">Ξέμαθε 101</h2>
+			<button class="oneoone">Ξεκίνα</button>
+    	</div>
+    	</center>
+    </div>
+    <div style="display: none;" id="learnprophecydiv">
+        <div class="prophlist">
+            <h1 style="grid-area: 1 /1;">Πρώτη ημέρα</h1>
+            <hr style="grid-area: 2/1;">
+		    <div id="day1_1" style="grid-area: 3/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day1_1.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Εισαγωγή</p>
+		    </div>
+		    <div style="grid-area: 4/1;" class="double">
+				<div id="day1_2" class="singled">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day1_2.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <p>Προτεστάντες</p>
+				</div>
+				<div id="day1_3" class="singled2">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day1_3.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <center><p>Μάρτυρες<br>του Ιεχωβά</p></center>
+				</div>
+			</div>
+		    <div id="day1_4" style="grid-area: 5/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day1_4.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Αντβεντιστές της Εβδόμης Ημέρας</p>
+		    </div>
+		    <div id="day1_5" style="grid-area: 6/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day1_5.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Πρώτη Εκκλησία</p>
+		    </div>
+		    <div id="day1_6" style="grid-area: 7/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day1_6.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Πως θα διαβάζουμε το κείμενο</p>
+		    </div>
+		    <hr style="margin-top: 50px; grid-area: 8/1;">
+		    <h1 style="grid-area: 9/1;">Δεύτερη ημέρα</h1>
+            <hr style="grid-area: 10/1;">
+            <div id="day2_1" style="grid-area: 11/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day2_1.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>2 Σπίτια του Ισραήλ</p>
+		    </div>
+		    <div id="day2_2" style="grid-area: 12/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day2_2.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Ρουβήν</p>
+		    </div>
+		    <div id="day2_3" style="grid-area: 13/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day2_3.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Ιωσήφ</p>
+		    </div>
+		    <div id="day2_4" style="grid-area: 14/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day2_4.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Εφραίμ</p>
+		    </div>
+		    <div id="day2_5" style="grid-area: 15/1;" class="single">
+		        <svg class="singleitem" height="100" width="100">
+		            <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+		        </svg>
+		        <img class="singleitem" src="{% static 'images/day2_5.png' %}" height="60" width="60"></img>
+		        <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+		        <p>Μανασσή</p>
+		    </div>
+		    <div style="grid-area: 16/1;" class="double">
+				<div id="day2_6" class="singled">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day2_6.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <p>Ιούδας</p>
+				</div>
+				<div id="day2_7" class="singled2">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day2_7.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <p>Δαν</p>
+				</div>
+		    </div>
+		    <div style="grid-area: 17/1;" class="double">
+				<div id="day2_8" class="singled">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day2_8.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <p>Συμεών-Λευί</p>
+				</div>
+				<div id="day2_9" class="singled2">
+				    <svg class="singleitem" height="100" width="100">
+				        <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				    </svg>
+				    <img class="singleitem" src="{% static 'images/day2_9.png' %}" height="60" width="60"></img>
+				    <img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				    <p>Ζαβουλών</p>
+				</div>
+		    </div>
+			<div id="day2_10" style="grid-area: 18/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_10.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Ισσάχαρ</p>
+			</div>
+			<div id="day2_11" style="grid-area: 19/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_11.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Γαδ</p>
+			</div>
+			<div id="day2_12" style="grid-area: 20/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_12.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Ασήρ</p>
+			</div>
+			<div id="day2_13" style="grid-area: 21/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_13.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Νεφθαλί</p>
+			</div>
+			<div id="day2_14" style="grid-area: 22/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_14.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Βενιαμίν</p>
+			</div>
+			<div id="day2_15" style="grid-area: 23/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_15.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<center><p>Κρίση στις<br>12 Φυλές</p></center>
+			</div>
+			<div id="day2_16" style="grid-area: 24/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day2_16.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τα αρχαία κείμενα</p>
+			</div>
+			<hr style="margin-top: 50px; grid-area: 25/1;">
+		    <h1 style="grid-area: 26/1;">Τρίτη ημέρα</h1>
+            <hr style="grid-area: 27/1;">
+            <div id="day3_1" style="grid-area: 28/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_1.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τι Εννοεί ο Δανιήλ με 'Εβδομάδες'?</p>
+			</div>
+			<div id="day3_2" style="grid-area: 29/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_2.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τι είπαμε ως τώρα</p>
+			</div>
+			<div id="day3_3" style="grid-area: 30/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_3.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Πρώτος Μάρτυρας</p>
+			</div>
+			<div id="day3_4" style="grid-area: 31/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_4.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Ανάλυση του πρώτου μάρτυρα</p>
+			</div>
+			<div id="day3_5" style="grid-area: 32/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_5.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Δεύτερος Μάρτυρας</p>
+			</div>
+			<div id="day3_6" style="grid-area: 33/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_6.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Συνήθεις Αντίρρηση</p>
+			</div>
+			<div id="day3_7" style="grid-area: 34/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day3_7.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Προφητείες για την τελευταία εβδομάδα</p>
+			</div>
+			<hr style="margin-top: 50px; grid-area: 35/1;">
+		    <h1 style="grid-area: 36/1;">Τέταρτη ημέρα</h1>
+            <hr style="grid-area: 37/1;">
+            <div id="day4_1" style="grid-area: 38/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day4_1.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Προφητεία για Μοντέρνα Τεχνολογία</p>
+			</div>
+			<hr style="margin-top: 50px; grid-area: 39/1;">
+		    <h1 style="grid-area: 40/1;">Πέμπτη ημέρα</h1>
+            <hr style="grid-area: 41/1;">
+            <div id="day5_1" style="grid-area: 42/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day5_1.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Κάτι εμφανίστηκε στην Αμερική</p>
+			</div>
+			<div id="day5_2" style="grid-area: 43/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day5_2.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Το Σημάδι του Ιωνά</p>
+			</div>
+			<div id="day5_3" style="grid-area: 44/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day5_3.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τι γίνεται τώρα στην Αμερική</p>
+			</div>
+			<div id="day5_4" style="grid-area: 45/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day5_4.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Μελλοντικό σημάδι του Ιωνά</p>
+			</div>
+			<hr style="margin-top: 50px; grid-area: 46/1;">
+		    <h1 style="grid-area: 47/1;">Έκτη ημέρα</h1>
+            <hr style="grid-area: 48/1;">
+            <div id="day6_1" style="grid-area: 49/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day6_1.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Παραδόσεις</p>
+			</div>
+			<div id="day6_2" style="grid-area: 50/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day6_2.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Πως λειτουργεί το βιβλιακό ημερολόγιο</p>
+			</div>
+			<div id="day6_3" style="grid-area: 51/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day6_3.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Βιβλιακές Γιορτές Νο1</p>
+			</div>
+			<div id="day6_4" style="grid-area: 52/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day6_4.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Βιβλιακές Γιορτές Νο2</p>
+			</div>
+			<div id="day6_5" style="grid-area: 53/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day6_5.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Άλλες Εντολές</p>
+			</div>
+			<hr style="margin-top: 50px; grid-area: 54/1;">
+		    <h1 style="grid-area: 55/1;">Έβδομη ημέρα</h1>
+            <hr style="grid-area: 56/1;">
+            <div id="day7_1" style="grid-area: 57/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_1.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Ο Αντίχριστος</p>
+			</div>
+			<div id="day7_2" style="grid-area: 58/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_2.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τοποθεσία του Θυρίου</p>
+			</div>
+			<div id="day7_3" style="grid-area: 59/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_3.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Τοποθεσία σύμφωνα με προφήτες</p>
+			</div>
+			<div id="day7_4" style="grid-area: 60/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_4.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Σημάδι του σατανά</p>
+			</div>
+			<div id="day7_5" style="grid-area: 61/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_5.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<p>Χωρίς Χρήματα</p>
+			</div>
+			<div id="day7_6" style="grid-area: 62/1;" class="single">
+				<svg class="singleitem" height="100" width="100">
+				    <circle r="45" cx="50" cy="50" fill="#00d2ff"/>
+				</svg>
+				<img class="singleitem" src="{% static 'images/day7_6.png' %}" height="60" width="60"></img>
+				<img style="display: none;" class="singleitem" src="{% static 'images/lock.png' %}" height="60" width="60"></img>
+				<center><p>Διαφορές<br>Ισλάμ και Χριστιανισμού</p></center>
+			</div>
+		</div>
+    </div>
+    <div style="display: none; overflow: hidden;" id="longvideoplayerdiv">
+    	<div id="longvideoplayerc" class="longvideoplayerc">
+	        <video
+				id="my-video"
+				class="video-js"
+				controls
+				preload="auto"
+				height="180"
+				width="320"
+				data-setup='{"controlBar": {"pictureInPictureToggle": false}}'
+			  >
+			</video>
+	    </div>
+    </div>
+    <div style="display: none;" id="unlearndiv">
+    	<div class="unlearnlist">
+    	    <center>
+    	        <div id="evolution" class="cardyellow">
+    	            <center>
+			            <img class="prophimage" src="{% static 'images/evolution.png' %}"/>
+			        </center>
+			        <button class="oneoone">Ξεκίνα</button>
+    	        </div>
+    	    </center>
+	    </div>
+    </div>
+    <div class="navbar">
+        <div class="effect"></div>
+        <button id="news">
+            <i style="font-size: 16px;" class="iconu-newspaper"></i>
+            <p style="overflow:hidden;">Άρθρα</p>
+        </button>
+        <button id="quotes" class="active">
+            <i style="font-size: 16px;" class="iconu-quote"></i>
+            <p style="overflow:hidden;">Αποσπάσματα</p>
+        </button>
+        <button id="plus" class="plus">
+            <i class="iconu-refresh"></i>
+        </button>
+        <button id="shorts">
+            <i style="font-size: 16px;" class="iconu-filmshorts"></i>
+            <p style="overflow:hidden;">Shorts</p>
+        </button>
+        <button id="lessons">
+            <i style="font-size: 16px;" class="iconu-lessons"></i>
+            <p style="overflow:hidden;">Μαθήματα</p>
+        </button>
+    </div>
+    <script type="text/javascript" src="{% static 'toast.js' %}"></script>
+    <script defer src="{% static 'video.min.js' %}"></script>
+    <script defer src="https://unpkg.com/@videojs/http-streaming@3.17.2/dist/videojs-http-streaming.js"></script>
+    <script defer type="text/javascript" src="{% static 'CookieMonster.js' %}"></script>
+    <script defer type="text/javascript" src="{% static 'javascript.js' %}"></script>
+</body>
+
+</html>
