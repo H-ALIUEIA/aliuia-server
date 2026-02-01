@@ -84,6 +84,7 @@ var evolution = document.getElementById("evolution");
 var player = videojs('my-video');
 var longvideoplayerc = document.getElementById("longvideoplayerc");
 makedays();
+var shortsplayer;
 
 function makedays()
 {
@@ -150,6 +151,15 @@ function httpGetunlearn()
     xmlHttp.send( null );
     const obj = JSON.parse(xmlHttp.responseText);
     return obj[0].videourl;
+}
+
+function httpGetshorts(category)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "api/shorts/"+category, false);
+    xmlHttp.send( null );
+    const obj = JSON.parse(xmlHttp.responseText);
+    return obj;
 }
 
 function httpGetquote(category)
@@ -550,6 +560,114 @@ function crosswalk()
 	}
 }
 
+function categorypopup()
+{
+    while (shortsdiv.firstChild)
+    {
+        shortsdiv.removeChild(shortsdiv.lastChild);
+    }
+}
+function addshortsdivs()
+{
+    var shortsarray = httpGetshorts("0");
+    var shortsarraydiv = []
+    for(var i = 0; i<shortsarray.length;i++)
+    {
+        var newscrollitem = document.createElement('section');
+        newscrollitem.classList.add("shortsscrollitem");
+        var newscrollitemsource = document.createElement('img');
+        newscrollitemsource.classList.add("shortsscrollitensource");
+        newscrollitemsource.src = "static/images/source.png"
+        newscrollitem.append(newscrollitemsource);
+        shortsarraydiv.push(newscrollitem);
+        shortsdiv.append(newscrollitem);
+    }
+    reinitshortvideo(shortsarraydiv[0],shortsarray[0].link);
+    shortsdiv.addEventListener('scrollend', () => {
+        var divnumarray = 0;
+        for(var i = 0; i < shortsarraydiv.length; i++)
+        {
+            if(checkInView(shortsdiv,shortsarraydiv[i],50))
+            {
+                divnumarray = i;
+            }
+        }
+        reinitshortvideo(shortsarraydiv[divnumarray],shortsarray[divnumarray].link);
+    });
+}
+
+function checkInView(container, element, partial) {
+    var cTop = container.scrollTop;
+    var cBottom = cTop + container.clientHeight;
+    var eTop = element.offsetTop;
+    var eBottom = eTop + element.clientHeight;
+    var isTotal = (eTop >= cTop && eBottom <= cBottom);
+    var isPartial;
+
+    if (partial === true) {
+        isPartial = (eTop < cTop && eBottom > cTop) || (eBottom > cBottom && eTop < cBottom);
+    } else if(typeof partial === "number"){
+        if (eTop < cTop && eBottom > cTop) {
+            isPartial = ((eBottom - cTop) * 100) / element.clientHeight > partial;
+        } else if (eBottom > cBottom && eTop < cBottom){
+            isPartial = ((cBottom - eTop) * 100) / element.clientHeight > partial;
+        }
+    }
+    return (isTotal || isPartial);
+}
+
+function reinitshortvideo(tempdiv,url)
+{
+    try
+    {
+		shortsplayer.dispose();
+		var video = document.createElement('video');
+		video.id = "shorts-video";
+		video.className="video-js";
+		video.preload="auto";
+		video.controls="true";
+		video.style.position="relative";
+		video.style.left="50%";
+		video.style.transform = "translateX(-50%)";
+		tempdiv.appendChild(video);
+		shortsplayer = videojs('shorts-video', {controlBar: {pictureInPictureToggle: false, fullscreenToggle: false}});
+		if(screen.width > screen.height)
+		{
+		     shortsplayer.height(screen.height-150);
+		}
+		else
+		{
+		    shortsplayer.width(screen.width)
+		}
+		shortsplayer.src({"type": "application/x-mpegURL", "src":url});
+        shortsplayer.play();
+	}
+	catch(err)
+	{
+	    var video = document.createElement('video');
+		video.id = "shorts-video";
+		video.className="video-js";
+		video.preload="auto";
+		video.controls="true";
+		video.style.position="relative";
+		video.style.left="50%";
+		video.style.transform = "translateX(-50%)";
+		tempdiv.appendChild(video);
+		shortsplayer = videojs('shorts-video', {controlBar: {pictureInPictureToggle: false, fullscreenToggle: false}});
+		if(screen.width > screen.height)
+		{
+		     shortsplayer.height(screen.height-150);
+		}
+		else
+		{
+		    shortsplayer.width(screen.width)
+		}
+		shortsplayer.src({"type": "application/x-mpegURL", "src":url});
+        shortsplayer.play();
+	}
+}
+
+
 function deaacti(buttonnumber)
 {
 	if(buttonnumber == 0)
@@ -581,6 +699,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		quote_text1.style.display = 'block';
+        quote_hr.style.display = 'block';
 		getquotes();
 	}
 	else if(buttonnumber == 2)
@@ -597,6 +717,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		addshortsdivs();
 	}
 	else if(buttonnumber == 3)
 	{
@@ -683,16 +804,31 @@ window.onbeforeunload = function ()
 {
     if(loc == 4 || loc == 5 || loc == 6 || loc == 7)
     {
+        try
+        {
+            shortsplayer.dispose();
+        }
+        catch(err){}
         player.pause();
         deaacti(3);
         return "Για να πάτε πίσω πατήστε παραμονή στη σελίδα";
     }
 };
 newsbutton.addEventListener("click", e=> {
+    try
+    {
+        shortsplayer.dispose();
+    }
+    catch(err){}
     player.pause();
 	deaacti(0);
 });
 quotesbutton.addEventListener("click", e=> {
+    try
+    {
+        shortsplayer.dispose();
+    }
+    catch(err){}
     player.pause();
 	deaacti(1);
 });
@@ -703,12 +839,26 @@ plusbutton.addEventListener("click", e=> {
         quote_hr.style.display = 'block';
 	    assignquotes();
 	}
+	if(loc == 2)
+	{
+	    categorypopup();
+	}
 });
 shortsbutton.addEventListener("click", e=> {
+    try
+    {
+        shortsplayer.dispose();
+    }
+    catch(err){}
     player.pause();
 	deaacti(2);
 });
 lessonsbutton.addEventListener("click", e=> {
+    try
+    {
+        shortsplayer.dispose();
+    }
+    catch(err){}
     player.pause();
 	deaacti(3);
 });
