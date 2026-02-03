@@ -644,6 +644,7 @@ function addshortsdivs()
     }
     reinitshortvideo(shortsarraydiv[0],shortsarray[0].link);
     shortstools.innerHTML = "1/"+(shortsarray.length).toString()+"<br>"+shortsarray[0].category;
+    currentshortsource = shortsarray[0].source;
     shortsdiv.addEventListener('scrollend', () => {
         var divnumarray = 0;
         for(var i = 0; i < shortsarraydiv.length; i++)
@@ -1550,6 +1551,12 @@ function reinitvideo()
     {
         player.width(screen.width)
     }
+    var pluginOptions = {
+		touchControls: {
+			seekSeconds: 5
+		}
+	};
+	player.mobileUi(pluginOptions);
 }
 
 function playvid()
