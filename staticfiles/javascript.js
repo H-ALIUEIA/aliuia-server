@@ -85,6 +85,8 @@ var player = videojs('my-video');
 var longvideoplayerc = document.getElementById("longvideoplayerc");
 makedays();
 var shortsplayer;
+var shortstools = document.getElementById("shortstools");
+var currentshortsource = "";
 
 function makedays()
 {
@@ -194,6 +196,10 @@ function locklessons()
     try
     {
         var tempcurles = cookiemonster.get('currentlesson');
+        if(tempcurles > 45)
+        {
+        	cookiemonster.set('currentlesson', 45, 7300);
+        }
         if(Number(tempcurles) == 0)
         {
             for(let i = 1; i<days.length; i++)
@@ -442,7 +448,61 @@ function scrolltolesson()
     try
     {
         var tempcurles = cookiemonster.get('currentlesson');
-        if(Number(tempcurles) != 45)
+        if(Number(tempcurles) == 3)
+        {
+	        try
+	        {
+			    if(cookiemonster.get('secondlesson') == 'true')
+			    {
+					setTimeout(function() {days[Number(tempcurles)].scrollIntoView();},1)
+				}
+				else
+				{
+				    setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+				}
+			}
+			catch(err)
+			{
+			    setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+			}
+		}
+		else if(Number(tempcurles) == 13)
+	    {
+	        try
+	        {
+			    if(cookiemonster.get('twelvelesson') == 'true')
+			    {
+			        setTimeout(function() {days[Number(tempcurles)].scrollIntoView();},1)
+			    }
+			    else
+			    {
+			        setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+			    }
+			}
+			catch(err)
+			{
+			    setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+			}
+		}
+		else if(Number(tempcurles) == 15)
+	    {
+	        try
+	        {
+			    if(cookiemonster.get('fourteen') == 'true')
+			    {
+			        setTimeout(function() {days[Number(tempcurles)].scrollIntoView();},1)
+			    }
+			    else
+			    {
+			        setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+			    }
+			}
+			catch(err)
+			{
+			    setTimeout(function() {days[Number(tempcurles)-1].scrollIntoView();},1)
+			}
+		}
+        else if(Number(tempcurles) != 45)
         {
             setTimeout(function() {days[Number(tempcurles)].scrollIntoView();},1)
         }
@@ -560,29 +620,30 @@ function crosswalk()
 	}
 }
 
-function categorypopup()
+function shortsource()
+{
+    navigator.clipboard.writeText(currentshortsource);
+    toastmaker("Αντιγράφτηκε");
+}
+
+function addshortsdivs()
 {
     while (shortsdiv.firstChild)
     {
-        shortsdiv.removeChild(shortsdiv.lastChild);
-    }
-}
-function addshortsdivs()
-{
+    	shortsdiv.firstChild.remove()
+	}
+    var shortsarray = [];
     var shortsarray = httpGetshorts("0");
     var shortsarraydiv = []
     for(var i = 0; i<shortsarray.length;i++)
     {
         var newscrollitem = document.createElement('section');
         newscrollitem.classList.add("shortsscrollitem");
-        var newscrollitemsource = document.createElement('img');
-        newscrollitemsource.classList.add("shortsscrollitensource");
-        newscrollitemsource.src = "static/images/source.png"
-        newscrollitem.append(newscrollitemsource);
         shortsarraydiv.push(newscrollitem);
         shortsdiv.append(newscrollitem);
     }
     reinitshortvideo(shortsarraydiv[0],shortsarray[0].link);
+    shortstools.innerHTML = "1/"+(shortsarray.length).toString()+"<br>"+shortsarray[0].category;
     shortsdiv.addEventListener('scrollend', () => {
         var divnumarray = 0;
         for(var i = 0; i < shortsarraydiv.length; i++)
@@ -593,6 +654,8 @@ function addshortsdivs()
             }
         }
         reinitshortvideo(shortsarraydiv[divnumarray],shortsarray[divnumarray].link);
+        shortstools.innerHTML = (divnumarray+1).toString()+"/"+(shortsarray.length).toString()+"<br>"+shortsarray[divnumarray].category;
+        currentshortsource = shortsarray[divnumarray].source;
     });
 }
 
@@ -616,6 +679,18 @@ function checkInView(container, element, partial) {
     return (isTotal || isPartial);
 }
 
+function pauseplayshort()
+{
+    if(shortsplayer.paused())
+    {
+        shortsplayer.play();
+    }
+    else
+    {
+        shortsplayer.paused();
+    }
+}
+
 function reinitshortvideo(tempdiv,url)
 {
     try
@@ -631,15 +706,26 @@ function reinitshortvideo(tempdiv,url)
 		video.style.transform = "translateX(-50%)";
 		tempdiv.appendChild(video);
 		shortsplayer = videojs('shorts-video', {controlBar: {pictureInPictureToggle: false, fullscreenToggle: false}});
-		if(screen.width > screen.height)
-		{
-		     shortsplayer.height(screen.height-150);
-		}
-		else
-		{
-		    shortsplayer.width(screen.width)
-		}
+		shortsplayer.on("loadeddata", function(){
+            if(screen.width > screen.height)
+			{
+				shortsplayer.height(screen.height-150);
+			}
+			else
+			{
+				shortsplayer.width(screen.width);
+				if(shortsplayer.currentDimensions('height').height > screen.height-150)
+				{
+					shortsplayer.height(screen.height-150);
+				}
+			}
+        });
 		shortsplayer.src({"type": "application/x-mpegURL", "src":url});
+		var pluginOptions = {
+		    touchControls: {
+          seekSeconds: 5}
+		};
+		shortsplayer.mobileUi(pluginOptions);
         shortsplayer.play();
 	}
 	catch(err)
@@ -654,19 +740,73 @@ function reinitshortvideo(tempdiv,url)
 		video.style.transform = "translateX(-50%)";
 		tempdiv.appendChild(video);
 		shortsplayer = videojs('shorts-video', {controlBar: {pictureInPictureToggle: false, fullscreenToggle: false}});
-		if(screen.width > screen.height)
-		{
-		     shortsplayer.height(screen.height-150);
-		}
-		else
-		{
-		    shortsplayer.width(screen.width)
-		}
+		shortsplayer.on("loadeddata", function(){
+            if(screen.width > screen.height)
+			{
+				shortsplayer.height(screen.height-150);
+			}
+			else
+			{
+				shortsplayer.width(screen.width);
+				if(shortsplayer.currentDimensions('height').height > screen.height-150)
+				{
+					shortsplayer.height(screen.height-150);
+				}
+			}
+        });
 		shortsplayer.src({"type": "application/x-mpegURL", "src":url});
+		var pluginOptions = {
+		    touchControls: {
+          seekSeconds: 10}
+		};
+		shortsplayer.mobileUi(pluginOptions);
         shortsplayer.play();
 	}
 }
 
+function fabbutton()
+{
+    if(loc == 1)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-refresh');
+    }
+    else if(loc == 2)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-source');
+    }
+    else if(loc == 3)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-lessons');
+    }
+    else if(loc == 4)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-lessons');
+    }
+    else if(loc == 5)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 6)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 7)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else
+    {
+    	plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-refresh');
+    }
+}
 
 function deaacti(buttonnumber)
 {
@@ -684,6 +824,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
 	}
 	else if(buttonnumber == 1)
 	{
@@ -701,6 +843,8 @@ function deaacti(buttonnumber)
 		unlearndiv.style.display = 'none';
 		quote_text1.style.display = 'block';
         quote_hr.style.display = 'block';
+        shortstools.style.display = 'none';
+        fabbutton();
 		getquotes();
 	}
 	else if(buttonnumber == 2)
@@ -717,6 +861,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'block';
+		fabbutton();
 		addshortsdivs();
 	}
 	else if(buttonnumber == 3)
@@ -733,6 +879,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
 		crosswalk();
 	}
 	else if(buttonnumber == 4)
@@ -751,6 +899,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'block';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
 	}
 	else if(buttonnumber == 5)
 	{
@@ -766,6 +916,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
 		playvid();
 	}
 	else if(buttonnumber == 6)
@@ -782,6 +934,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'block';
+		shortstools.style.display = 'none';
+		fabbutton();
 	}
 	else if(buttonnumber == 7)
 	{
@@ -797,6 +951,8 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
 		playvid2();
 	}
 }
@@ -839,19 +995,122 @@ plusbutton.addEventListener("click", e=> {
         quote_hr.style.display = 'block';
 	    assignquotes();
 	}
-	if(loc == 2)
+	else if(loc == 2)
 	{
-	    categorypopup();
+	    shortsource();
+	}
+	else if(loc == 3)
+	{
+	    deaacti(4);
+	}
+	else if(loc == 4)
+	{
+	    try
+	    {
+	        currentlesson = Number(cookiemonster.get('currentlesson'));
+	        if(currentlesson == 3)
+            {
+		        try
+		        {
+				    if(cookiemonster.get('secondlesson') == 'true')
+				    {
+						deaacti(5);
+					}
+					else
+					{
+					    currentlesson = 1;
+					    deaacti(5);
+					}
+				}
+				catch(err)
+				{
+				    currentlesson = 1;
+					deaacti(5);
+				}
+			}
+			else if(currentlesson == 13)
+		    {
+		        try
+		        {
+				    if(cookiemonster.get('twelvelesson') == 'true')
+				    {
+				        deaacti(5);
+				    }
+				    else
+				    {
+				        currentlesson = 11;
+					    deaacti(5);
+				    }
+				}
+				catch(err)
+				{
+				    currentlesson = 11;
+				    deaacti(5);
+				}
+			}
+			else if(currentlesson == 15)
+		    {
+		        try
+		        {
+				    if(cookiemonster.get('fourteen') == 'true')
+				    {
+				        deaacti(5);
+				    }
+				    else
+				    {
+				        currentlesson = 13;
+				        deaacti(5);
+				    }
+				}
+				catch(err)
+				{
+				    currentlesson = 13;
+				    deaacti(5);
+				}
+			}
+			else if(currentlesson == 45)
+        	{
+        	    currentlesson = 44;
+				deaacti(5);
+        	}
+			else
+			{
+				deaacti(5);
+			}
+		}
+		catch(err)
+		{
+		    currentlesson = 0;
+		    deaacti(5);
+		}
+	}
+	else if(loc == 5)
+	{
+		player.pause();
+	    deaacti(4);
+	}
+	else if(loc == 6)
+	{
+		player.pause();
+		deaacti(3);
+	}
+	else if(loc == 7)
+	{
+	    player.pause();
+	    deaacti(6);
 	}
 });
 shortsbutton.addEventListener("click", e=> {
-    try
+    if(loc != 2)
     {
-        shortsplayer.dispose();
-    }
-    catch(err){}
-    player.pause();
-	deaacti(2);
+		try
+		{
+		    shortsplayer.dispose();
+		}
+		catch(err){}
+		player.pause();
+		deaacti(2);
+	}
 });
 lessonsbutton.addEventListener("click", e=> {
     try
@@ -938,7 +1197,11 @@ function toastmaker(text)
 	  newWindow: false,
 	  close: true,
 	  gravity: "top", // `top` or `bottom`
-	  position: "right", // `left`, `center` or `right`
+	  offset: {
+          x: 0, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+          y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+      },
+	  position: "center", // `left`, `center` or `right`
 	  stopOnFocus: true, // Prevents dismissing of toast on hover
 	  style: {
 		background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -1292,7 +1555,7 @@ function reinitvideo()
 function playvid()
 {
     reinitvideo();
-    ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+    ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
     player.src({"type": "application/x-mpegURL", "src":ggg});
     player.play();
     player.on('ended', function() {
@@ -1315,14 +1578,14 @@ function playvid()
 				if(cookiemonster.get('thirdlesson') == 'true' && Number(cookiemonster.get('currentlesson')) < 5)
 				{
 				    currentlesson = currentlesson+2;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1330,7 +1593,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson+1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1343,14 +1606,14 @@ function playvid()
 				if(cookiemonster.get('secondlesson') == 'true')
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson-1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1358,7 +1621,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson-1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1371,14 +1634,14 @@ function playvid()
 				if(cookiemonster.get('thirdteenlesson') == 'true' && Number(cookiemonster.get('currentlesson')) < 15)
 				{
 				    currentlesson = currentlesson+2;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1386,7 +1649,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson+1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1399,14 +1662,14 @@ function playvid()
 				if(cookiemonster.get('twelvelesson') == 'true')
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson-1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1414,7 +1677,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson-1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1427,14 +1690,14 @@ function playvid()
 				if(cookiemonster.get('fifteen') == 'true' && Number(cookiemonster.get('currentlesson')) < 17)
 				{
 				    currentlesson = currentlesson+2;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1442,7 +1705,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson+1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1455,14 +1718,14 @@ function playvid()
 				if(cookiemonster.get('fourteen') == 'true')
 				{
 				    currentlesson = currentlesson+1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
 				else
 				{
 				    currentlesson = currentlesson-1;
-					ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+					ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 					player.src({"type":"application/x-mpegURL", "src":ggg});
 					player.play();
 				}
@@ -1470,7 +1733,7 @@ function playvid()
 			catch(err)
 			{
 			    currentlesson = currentlesson-1;
-				ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+				ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 				player.src({"type":"application/x-mpegURL", "src":ggg});
 				player.play();
 			}
@@ -1478,7 +1741,7 @@ function playvid()
 		else
 		{
 			currentlesson = currentlesson+1;
-			ggg = httpGetproph(lessons[currentlesson][0],lessons[currentlesson][1]-1);
+			ggg = httpGetproph(lessons[currentlesson][0],Number(lessons[currentlesson][1])-1);
 			player.src({"type":"application/x-mpegURL", "src":ggg});
 			player.play();
 		}

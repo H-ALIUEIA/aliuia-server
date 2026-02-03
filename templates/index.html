@@ -13,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'toastify.min.css' %}">
     <link href="{% static 'video-js.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'videojs-mobile-ui.css' %}" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -36,12 +37,13 @@
 		    -webkit-font-smoothing: antialiased;
 		    -moz-osx-font-smoothing: grayscale
 		}
-		.iconu-baseline_apps_24:before{content:'\0041';}
-		.iconu-filmshorts:before{content:'\0042';}
-		.iconu-lessons:before{content:'\0043';}
-		.iconu-quote:before{content:'\0044';}
-		.iconu-refresh:before{content:'\0045';}
-		.iconu-newspaper:before{content:'\0046';}
+		.iconu-baseline_apps_24:before{content:'\0043';}
+		.iconu-filmshorts:before{content:'\0045';}
+		.iconu-lessons:before{content:'\0046';}
+		.iconu-quote:before{content:'\0047';}
+		.iconu-refresh:before{content:'\0048';}
+		.iconu-newspaper:before{content:'\0049';}
+		.iconu-source:before{content:'\004a';}
     </style>
 	<div style="display: none; overflow: hidden;" id="newsdiv">
         <div class="quote-container2">
@@ -516,6 +518,7 @@
     	    </center>
 	    </div>
     </div>
+    <p id="shortstools" style="display: none;" class="shorttext"></p>
     <div class="navbar">
         <div class="effect"></div>
         <button id="news">
@@ -540,7 +543,7 @@
     </div>
     <script type="text/javascript" src="{% static 'toast.js' %}"></script>
     <script defer src="{% static 'video.min.js' %}"></script>
-    <script defer src="https://unpkg.com/@videojs/http-streaming@3.17.2/dist/videojs-http-streaming.js"></script>
+    <script defer src="{% static 'videojs-mobile-ui.min.js' %}"></script>
     <script defer type="text/javascript" src="{% static 'CookieMonster.js' %}"></script>
     <script defer type="text/javascript" src="{% static 'javascript.js' %}"></script>
 </body>

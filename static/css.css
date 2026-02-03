@@ -15,12 +15,6 @@ body {
   scroll-snap-type: y mandatory;
   overflow: auto;
 }
-.shortsscrollitensource {
-  position: relative;
-  left: 75%;
-  z-index:1;
-  top: 80%;
-}
 .shortsscrollitem {
   height: 100vh;
   scroll-snap-align: start;
@@ -163,6 +157,18 @@ body {
 
 .navbar button:active:not(.plus) {
     transform: scale(1.2);
+}
+
+.shorttext {
+    position: fixed;
+    left:50%;
+    top:100%;
+    color: white;
+    height: 60px;
+    width: auto;
+    margin-top: -140px;
+    text-align: center;
+    transform: translateX(-50%);
 }
 
 .navbar button.active {
