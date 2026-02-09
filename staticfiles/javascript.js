@@ -628,6 +628,7 @@ function shortsource()
 
 function addshortsdivs()
 {
+    shortsdiv.scrollTop = 0;
     while (shortsdiv.firstChild)
     {
     	shortsdiv.firstChild.remove()
