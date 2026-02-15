@@ -1,5 +1,6 @@
 let lessons = [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],[2,10],[2,11],[2,12],[2,13],[2,14],[2,15],[2,16],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],[4,1],[5,1],[5,2],[5,3],[5,4],[6,1],[6,2],[6,3],[6,4],[6,5],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]];
 var currentlesson = 0;
+var currentunlearn = 0;
 var loc = 1;
 var newsbutton = document.getElementById("news");
 var quotesbutton = document.getElementById("quotes");
@@ -15,6 +16,7 @@ var lessonsdiv = document.getElementById("lessonsdiv");
 var learnprophecydiv = document.getElementById("learnprophecydiv");
 var longvideoplayerdiv = document.getElementById("longvideoplayerdiv");
 var unlearndiv = document.getElementById("unlearndiv");
+var enochlayout = document.getElementById("enochlayout");
 var quote_text1 = document.getElementById("quote_text1");
 var quote_hr = document.getElementById("quote_hr");
 var quote_text2 = document.getElementById("quote_text2");
@@ -72,6 +74,17 @@ var day7_3 = document.getElementById("day7_3");
 var day7_4 = document.getElementById("day7_4");
 var day7_5 = document.getElementById("day7_5");
 var day7_6 = document.getElementById("day7_6");
+var enocharray = [];
+var enoch_1 = document.getElementById("enoch_1");
+var enoch_2 = document.getElementById("enoch_2");
+var enoch_3 = document.getElementById("enoch_3");
+var enoch_4 = document.getElementById("enoch_4");
+var enoch_5 = document.getElementById("enoch_5");
+var enoch_6 = document.getElementById("enoch_6");
+var enoch_7 = document.getElementById("enoch_7");
+var enoch_8 = document.getElementById("enoch_8");
+var enoch_9 = document.getElementById("enoch_9");
+var enoch_10 = document.getElementById("enoch_10");
 var prophwalkimg1 = document.getElementById("prophwalkimg1");
 var prophwalkimg2 = document.getElementById("prophwalkimg2");
 var prophwalkimg3 = document.getElementById("prophwalkimg3");
@@ -81,12 +94,28 @@ var prophwalkimg6 = document.getElementById("prophwalkimg6");
 var prophwalkimg7 = document.getElementById("prophwalkimg7");
 var prophwalkimg8 = document.getElementById("prophwalkimg8");
 var evolution = document.getElementById("evolution");
+var enoch = document.getElementById("enoch");
 var player = videojs('my-video');
 var longvideoplayerc = document.getElementById("longvideoplayerc");
 makedays();
+makeenoch();
 var shortsplayer;
 var shortstools = document.getElementById("shortstools");
 var currentshortsource = "";
+
+function makeenoch()
+{
+    enocharray.push(enoch_1);
+    enocharray.push(enoch_2);
+    enocharray.push(enoch_3);
+    enocharray.push(enoch_4);
+    enocharray.push(enoch_5);
+    enocharray.push(enoch_6);
+    enocharray.push(enoch_7);
+    enocharray.push(enoch_8);
+    enocharray.push(enoch_9);
+    enocharray.push(enoch_10);
+}
 
 function makedays()
 {
@@ -146,10 +175,10 @@ function httpGetproph(day,number)
     return obj[number].videourl;
 }
 
-function httpGetunlearn()
+function httpGetunlearn(unrealnum)
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "api/unlearn/1", false);
+    xmlHttp.open( "GET", "api/unlearn/"+unrealnum, false);
     xmlHttp.send( null );
     const obj = JSON.parse(xmlHttp.responseText);
     return obj[0].videourl;
@@ -803,6 +832,11 @@ function fabbutton()
         plusbutton.children[0].removeAttribute("class");
         plusbutton.children[0].classList.add('iconu-baseline_apps_24');
     }
+    else if(loc == 8)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
     else
     {
     	plusbutton.children[0].removeAttribute("class");
@@ -826,6 +860,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -843,6 +878,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		quote_text1.style.display = 'block';
         quote_hr.style.display = 'block';
         shortstools.style.display = 'none';
@@ -863,6 +899,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'block';
 		fabbutton();
 		addshortsdivs();
@@ -881,6 +918,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		crosswalk();
@@ -901,6 +939,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'block';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -918,6 +957,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		playvid();
@@ -936,6 +976,7 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'block';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -953,14 +994,33 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		playvid2();
 	}
+	else if(buttonnumber == 8)
+	{
+		loc = 8;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		enochlayout.style.display = 'block';
+		shortstools.style.display = 'none';
+		fabbutton();
+	}
 }
 window.onbeforeunload = function ()
 {
-    if(loc == 4 || loc == 5 || loc == 6 || loc == 7)
+    if(loc == 4 || loc == 5 || loc == 6 || loc == 7 || loc == 8)
     {
         try
         {
@@ -1101,6 +1161,11 @@ plusbutton.addEventListener("click", e=> {
 	    player.pause();
 	    deaacti(6);
 	}
+	else if(loc == 8)
+	{
+	    player.pause();
+	    deaacti(6);
+	}
 });
 shortsbutton.addEventListener("click", e=> {
     if(loc != 2)
@@ -1211,6 +1276,46 @@ function toastmaker(text)
 	  onClick: function(){} // Callback after click
 	}).showToast();
 }
+enoch_1.addEventListener("click", e=> {
+    currentunlearn = 2;
+    deaacti(7);
+});
+enoch_2.addEventListener("click", e=> {
+    currentunlearn = 3;
+    deaacti(7);
+});
+enoch_3.addEventListener("click", e=> {
+    currentunlearn = 4;
+    deaacti(7);
+});
+enoch_4.addEventListener("click", e=> {
+    currentunlearn = 5;
+    deaacti(7);
+});
+enoch_5.addEventListener("click", e=> {
+    currentunlearn = 6;
+    deaacti(7);
+});
+enoch_6.addEventListener("click", e=> {
+    currentunlearn = 7;
+    deaacti(7);
+});
+enoch_7.addEventListener("click", e=> {
+    currentunlearn = 8;
+    deaacti(7);
+});
+enoch_8.addEventListener("click", e=> {
+    currentunlearn = 9;
+    deaacti(7);
+});
+enoch_9.addEventListener("click", e=> {
+    currentunlearn = 10;
+    deaacti(7);
+});
+enoch_10.addEventListener("click", e=> {
+    currentunlearn = 11;
+    deaacti(7);
+});
 day1_1.addEventListener("click", e=> {
     currentlesson = 0;
     deaacti(5);
@@ -1524,11 +1629,15 @@ day7_6.addEventListener("click", e=> {
     }
 });
 evolution.addEventListener("click", e=> {
+    currentunlearn = 1;
     deaacti(7);
+});
+enoch.addEventListener("click", e=> {
+    deaacti(8);
 });
 function playvid2()
 {
-    ggg = httpGetunlearn();
+    ggg = httpGetunlearn(currentunlearn.toString());
     player.src({"type": "application/x-mpegURL", "src":ggg});
     player.play();
 }
