@@ -1628,13 +1628,16 @@ day7_6.addEventListener("click", e=> {
     	deaacti(5);
     }
 });
+
 evolution.addEventListener("click", e=> {
     currentunlearn = 1;
     deaacti(7);
 });
+
 enoch.addEventListener("click", e=> {
     deaacti(8);
 });
+
 function playvid2()
 {
     ggg = httpGetunlearn(currentunlearn.toString());

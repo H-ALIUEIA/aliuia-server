@@ -623,11 +623,27 @@
             <p style="overflow:hidden;">Μαθήματα</p>
         </button>
     </div>
+    <dialog>
+        <form method="dialog">
+            <center>
+                <p>Διαθέσιμη τώρα η Android εφαρμογή</p>
+                <p>Για καλύτερη εμπειρία</p><br>
+                <a href="https://play.google.com/store/apps/details?id=io.github.h_aliueia" tabIndex="0"><img class="bn45" src="{% static 'images/googlestore.png' %}" alt="bn45"/></a><br><br>
+                <button type="submit">Δεν ενδιαφέρομαι</button>
+            </center>
+        </form>
+    </dialog>
     <script type="text/javascript" src="{% static 'toast.js' %}"></script>
     <script defer src="{% static 'video.min.js' %}"></script>
     <script defer src="{% static 'videojs-mobile-ui.min.js' %}"></script>
     <script defer type="text/javascript" src="{% static 'CookieMonster.js' %}"></script>
     <script defer type="text/javascript" src="{% static 'javascript.js' %}"></script>
+    <script>
+        {% if request.Android == 1 %}
+            const dg = document.getElementsByTagName("dialog")[0];
+            dg.showModal();
+        {% endif %}
+    </script>
 </body>
 
 </html>
