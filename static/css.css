@@ -71,6 +71,18 @@ dialog[open]::backdrop {
   max-width: 90vw;
   height: auto;
 }
+.cardislam {
+  border-radius: 25px;
+  background-color: #00551E;
+  padding: 20px;
+  margin-top: 20px;
+  padding-bottom: 100px;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 90vw;
+  height: auto;
+}
 .icon-advanced {
     background: url('{% static "images/newspaper.svg" %}');
     background-repeat: no-repeat;
