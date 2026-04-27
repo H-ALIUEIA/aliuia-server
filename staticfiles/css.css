@@ -392,6 +392,13 @@ dialog[open]::backdrop {
 	justify-content: center;
 }
 
+.news-container3 {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+}
+
 .quote-text1 {
 	top: 0;
 	left: 0;

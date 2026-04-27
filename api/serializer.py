@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel
+from .models import ArticleModel, ArtListModel
 
 class QuotesSerializer(serializers.ModelSerializer):
  class Meta:
@@ -49,4 +50,14 @@ class ProphecyLessonsSerializer(serializers.ModelSerializer):
 class UnlearnSerializer(serializers.ModelSerializer):
  class Meta:
   model = UnlearnModel
+  fields = '__all__'
+  
+class ArticleSerializer(serializers.ModelSerializer):
+ class Meta:
+  model = ArticleModel
+  fields = '__all__'
+  
+class ArtListSerializer(serializers.ModelSerializer):
+ class Meta:
+  model = ArtListModel
   fields = '__all__'

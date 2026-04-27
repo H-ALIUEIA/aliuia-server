@@ -26,6 +26,7 @@ var quoteoptions = document.getElementById("quoteoptions");
 var quotefavorites = document.getElementById("favorites");
 var bookmark_image = document.getElementById("bookmark_image");
 var bookmark_image_full = document.getElementById("bookmark_image_full");
+var newslist = document.getElementById("newslist");
 var quotes = [];
 var randomint = 0;
 var quotesourcetoggle = 0;
@@ -193,6 +194,24 @@ function httpGetproph(day,number)
     xmlHttp.send( null );
     const obj = JSON.parse(xmlHttp.responseText);
     return obj[number].videourl;
+}
+
+function httpGetnewslist()
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "api/articles/", false);
+    xmlHttp.send( null );
+    const obj = JSON.parse(xmlHttp.responseText);
+    return obj;
+}
+
+function httpGetnewsarticle(articlenumber)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "api/articles/"+articlenumber.toString(), false);
+    xmlHttp.send( null );
+    const obj = JSON.parse(xmlHttp.responseText);
+    return obj[0].body;
 }
 
 function httpGetunlearn(unrealnum)
@@ -862,10 +881,86 @@ function fabbutton()
         plusbutton.children[0].removeAttribute("class");
         plusbutton.children[0].classList.add('iconu-baseline_apps_24');
     }
+    else if(loc == 10)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
     else
     {
     	plusbutton.children[0].removeAttribute("class");
         plusbutton.children[0].classList.add('iconu-refresh');
+    }
+}
+
+function getnews()
+{
+    newslist.innerHTML = "";
+    var x = httpGetnewslist();
+    for(let i = 0; i<x.length;i++)
+    {
+    	if(checkandroid())
+    	{
+    		const button1 = document.createElement("div");
+		    const center1 = document.createElement("center");
+		    button1.style = "background-color:#DFDFDF;display: flex;flex-direction: column;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;border-radius: 5px;margin-top: 20px;";
+		    const image1 = document.createElement("img");
+		    image1.src = "https://i-aliuia.b-cdn.net/"+x[i].image;
+		    image1.style= "object-fit: contain;border-radius: 5px 5px 0 0;float: center;";
+		    image1.height="180";
+		    image1.width="270";
+		    const div2 = document.createElement("div");
+		    div2.style = "width:calc(100%);height:100px;float: left;display: flex;align-items: center;justify-content: center;place-items: center;"
+		    const text1 = document.createElement("p");
+		    text1.innerText = x[i].title;
+		    text1.style = "width:80%;word-wrap: break-word;text-align:center;vertical-align: center;vertical-align: middle;font-size: 20px;";
+		    button1.onclick = function()
+		    {
+		        newslist.innerHTML = "";
+		        var bodyref = httpGetnewsarticle(x[i].bodyref);
+		        var temp = document.createElement('div');
+		        temp.innerHTML = bodyref;
+		        newslist.appendChild(temp);
+		        loc = 10;
+		        fabbutton();
+		    }
+		    center1.appendChild(image1);
+		    div2.appendChild(text1);
+		    center1.appendChild(div2);
+		    button1.appendChild(center1);
+		    newslist.appendChild(button1);
+    	}
+    	else
+    	{
+		    const button1 = document.createElement("div");
+		    const center1 = document.createElement("center");
+		    button1.style = "background-color:#DFDFDF;display: flex;flex-direction: column;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;border-radius: 5px;margin-top: 20px;";
+		    const image1 = document.createElement("img");
+		    image1.src = "https://i-aliuia.b-cdn.net/"+x[i].image;
+		    image1.style= "object-fit: contain;border-radius: 5px 5px 0 0;float: left;";
+		    image1.height="180";
+		    image1.width="270";
+		    const div2 = document.createElement("div");
+		    div2.style = "width:calc(100% - 270px);height:180px;float: left;display: flex;align-items: center;justify-content: center;place-items: center;"
+		    const text1 = document.createElement("p");
+		    text1.innerText = x[i].title;
+		    text1.style = "width:80%;word-wrap: break-word;text-align:center;vertical-align: center;vertical-align: middle;font-size: 20px;";
+		    button1.onclick = function()
+		    {
+		        newslist.innerHTML = "";
+		        var bodyref = httpGetnewsarticle(x[i].bodyref);
+		        var temp = document.createElement('div');
+		        temp.innerHTML = bodyref;
+		        newslist.appendChild(temp);
+		        loc = 10;
+		        fabbutton();
+		    }
+		    center1.appendChild(image1);
+		    div2.appendChild(text1);
+		    center1.appendChild(div2);
+		    button1.appendChild(center1);
+		    newslist.appendChild(button1);
+		}
     }
 }
 
@@ -889,6 +984,7 @@ function deaacti(buttonnumber)
 		islamlayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
+		getnews();
 	}
 	else if(buttonnumber == 1)
 	{
@@ -1104,7 +1200,11 @@ quotesbutton.addEventListener("click", e=> {
 	deaacti(1);
 });
 plusbutton.addEventListener("click", e=> {
-	if(loc == 1)
+	if(loc == 0)
+	{
+        getnews();
+	}
+	else if(loc == 1)
 	{
 	    quote_text1.style.display = 'block';
         quote_hr.style.display = 'block';
@@ -1223,6 +1323,10 @@ plusbutton.addEventListener("click", e=> {
 	{
 	    player.pause();
 	    deaacti(6);
+	}
+	else if(loc == 10)
+	{
+	    deaacti(0);
 	}
 });
 shortsbutton.addEventListener("click", e=> {

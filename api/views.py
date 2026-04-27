@@ -2,7 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel
-from .serializer import QuotesSerializer, ShortsSerializer, VideosSerializer, LevelsSerializer, NotificationsSerializer, LevelsListSerializer, ProphecyLessonsSerializer, UnlearnSerializer
+from .models import ArticleModel, ArtListModel
+from .serializer import QuotesSerializer, ShortsSerializer, VideosSerializer, LevelsSerializer, NotificationsSerializer, LevelsListSerializer, ProphecyLessonsSerializer, UnlearnSerializer, ArtListSerializer, ArticleSerializer
 from random import choice
 from django.http import FileResponse
 from django.conf import settings
@@ -19,6 +20,18 @@ class download_db(ObjectMultipleModelAPIView):
   {'queryset': LevelsList.objects.all(), 'serializer_class': LevelsListSerializer},
   {'queryset': ProphecyLessonsModel.objects.all(), 'serializer_class': ProphecyLessonsSerializer}
  ]
+
+@api_view(['GET'])
+def get_article_list(request):
+ articles = ArtListModel.objects.all()
+ serializer = ArtListSerializer(articles, many=True)
+ return Response(serializer.data)
+ 
+@api_view(['GET'])
+def get_article(request, pk):
+ article = ArticleModel.objects.all().filter(id=pk)
+ serializer = ArticleSerializer(article, many=True)
+ return Response(serializer.data)
 
 @api_view(['GET'])
 def unlearn(request,pk):

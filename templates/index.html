@@ -45,11 +45,9 @@
 		.iconu-newspaper:before{content:'\0049';}
 		.iconu-source:before{content:'\004a';}
     </style>
-	<div style="display: none; overflow: hidden;" id="newsdiv">
-        <div class="quote-container2">
-          <div class="quote-container3">
+	<div style="display: none;" id="newsdiv">
+        <div id="newslist" class="news-container3">
             <p class="comingsoon">Έρχεται σύντομα</p>
-          </div>
         </div>
     </div>
     <div id="quotesdiv" style="position: fixed; width: 100%; overflow: hidden;">
@@ -697,6 +695,15 @@
             const dg = document.getElementsByTagName("dialog")[0];
             dg.showModal();
         {% endif %}
+    </script>
+    <script defer>
+        function checkandroid()
+        {
+        	{% if request.Android == 1 %}
+        	    return true;
+        	{% endif %}
+        	return false;
+        }
     </script>
 </body>
 
