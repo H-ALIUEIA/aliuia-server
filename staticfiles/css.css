@@ -59,24 +59,45 @@ dialog[open]::backdrop {
   max-width: 90vw;
   height: auto;
 }
-.cardenoch {
+.cardgreen {
   border-radius: 25px;
-  background-color: #BE7128;
+  background-color: #00FF00;
   padding: 20px;
   margin-top: 20px;
-  padding-bottom: 100px;
   margin-right: calc(50% - 50vw);
   margin-left: calc(50% - 50vw);
   width: 100vw;
   max-width: 90vw;
   height: auto;
 }
+.cardblack {
+  border-radius: 25px;
+  background-color: #000000;
+  padding: 20px;
+  margin-top: 20px;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 90vw;
+  height: auto;
+}
+.cardenoch {
+  border-radius: 25px;
+  background-color: #BE7128;
+  padding: 20px;
+  margin-top: 20px;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 90vw;
+  height: auto;
+  padding-bottom: 100px;
+}
 .cardislam {
   border-radius: 25px;
   background-color: #00551E;
   padding: 20px;
   margin-top: 20px;
-  padding-bottom: 100px;
   margin-right: calc(50% - 50vw);
   margin-left: calc(50% - 50vw);
   width: 100vw;
@@ -106,6 +127,18 @@ dialog[open]::backdrop {
   width: 100vw;
   max-width: 90vw;
   height: auto;
+}
+.card4 {
+  margin-top: 25px;
+  border-radius: 25px;
+  background-color: #00FF00;
+  padding: 20px;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 90vw;
+  height: auto;
+  padding-bottom: 100px;
 }
 .longvideoplayerc {
   overflow: hidden;

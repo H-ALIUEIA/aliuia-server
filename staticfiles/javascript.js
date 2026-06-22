@@ -9,6 +9,7 @@ var shortsbutton = document.getElementById("shorts");
 var lessonsbutton = document.getElementById("lessons");
 var prophbutton = document.getElementById("prophecies");
 var unlearnbutton = document.getElementById("unlearn");
+var unlearn2button = document.getElementById("unlearn2");
 var newsdiv = document.getElementById("newsdiv");
 var quotesdiv = document.getElementById("quotesdiv");
 var shortsdiv = document.getElementById("shortsdiv");
@@ -16,7 +17,10 @@ var lessonsdiv = document.getElementById("lessonsdiv");
 var learnprophecydiv = document.getElementById("learnprophecydiv");
 var longvideoplayerdiv = document.getElementById("longvideoplayerdiv");
 var unlearndiv = document.getElementById("unlearndiv");
+var unlearndiv2 = document.getElementById("unlearndiv2");
 var enochlayout = document.getElementById("enochlayout");
+var climatelayout = document.getElementById("climatelayout");
+var dinolayout = document.getElementById("dinolayout");
 var islamlayout = document.getElementById("islamlayout");
 var quote_text1 = document.getElementById("quote_text1");
 var quote_hr = document.getElementById("quote_hr");
@@ -87,6 +91,12 @@ var enoch_7 = document.getElementById("enoch_7");
 var enoch_8 = document.getElementById("enoch_8");
 var enoch_9 = document.getElementById("enoch_9");
 var enoch_10 = document.getElementById("enoch_10");
+var dinoarray = [];
+var dino_1 = document.getElementById("dino_1");
+var dino_2 = document.getElementById("dino_2");
+var dino_3 = document.getElementById("dino_3");
+var dino_4 = document.getElementById("dino_4");
+var dino_5 = document.getElementById("dino_5");
 var islamarray = [];
 var islam_1 = document.getElementById("islam_1");
 var islam_2 = document.getElementById("islam_2");
@@ -103,16 +113,54 @@ var prophwalkimg6 = document.getElementById("prophwalkimg6");
 var prophwalkimg7 = document.getElementById("prophwalkimg7");
 var prophwalkimg8 = document.getElementById("prophwalkimg8");
 var evolution = document.getElementById("evolution");
+var dinosaurs = document.getElementById("dinosaurs");
 var enoch = document.getElementById("enoch");
 var islam = document.getElementById("islam");
+var space = document.getElementById("space");
+var climate = document.getElementById("climate");
+var spacelayout = document.getElementById("spacelayout");
+var spacearray = [];
+var space_1 = document.getElementById("space_1");
+var space_2 = document.getElementById("space_2");
+var space_3 = document.getElementById("space_3");
+var space_4 = document.getElementById("space_4");
+var space_5 = document.getElementById("space_5");
+var space_6 = document.getElementById("space_6");
+var climatearray = [];
+var climate_1 = document.getElementById("climate_1");
+var climate_2 = document.getElementById("climate_2");
+var climate_3 = document.getElementById("climate_3");
+var climate_4 = document.getElementById("climate_4");
+var nasaarticle = document.getElementById("nasaarticle");
+var nasaarticlelist = document.getElementById("nasaarticlelist");
 var player = videojs('my-video');
 var longvideoplayerc = document.getElementById("longvideoplayerc");
 makedays();
 makeenoch();
 makeislam();
+makedino();
+makespace();
+makeclimate();
 var shortsplayer;
 var shortstools = document.getElementById("shortstools");
 var currentshortsource = "";
+
+function makeclimate()
+{
+	climatearray.push(climate_1);
+	climatearray.push(climate_2);
+	climatearray.push(climate_3);
+	climatearray.push(climate_4);
+}
+
+function makespace()
+{
+    spacearray.push(space_2);
+    spacearray.push(space_3);
+    spacearray.push(space_4);
+    spacearray.push(space_5);
+    spacearray.push(space_6);
+}
 
 function makeislam()
 {
@@ -136,6 +184,15 @@ function makeenoch()
     enocharray.push(enoch_8);
     enocharray.push(enoch_9);
     enocharray.push(enoch_10);
+}
+
+function makedino()
+{
+	dinoarray.push(dino_1);
+	dinoarray.push(dino_2);
+	dinoarray.push(dino_3);
+	dinoarray.push(dino_4);
+	dinoarray.push(dino_5);
 }
 
 function makedays()
@@ -886,6 +943,31 @@ function fabbutton()
         plusbutton.children[0].removeAttribute("class");
         plusbutton.children[0].classList.add('iconu-baseline_apps_24');
     }
+    else if(loc == 11)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 12)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 13)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 14)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
+    else if(loc == 15)
+    {
+        plusbutton.children[0].removeAttribute("class");
+        plusbutton.children[0].classList.add('iconu-baseline_apps_24');
+    }
     else
     {
     	plusbutton.children[0].removeAttribute("class");
@@ -980,8 +1062,13 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		getnews();
@@ -997,11 +1084,16 @@ function deaacti(buttonnumber)
 		quotesdiv.style.display = 'block';
 		shortsdiv.style.display = 'none';
 		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		quote_text1.style.display = 'block';
         quote_hr.style.display = 'block';
         shortstools.style.display = 'none';
@@ -1019,11 +1111,16 @@ function deaacti(buttonnumber)
 		quotesdiv.style.display = 'none';
 		shortsdiv.style.display = 'block';
 		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'block';
 		fabbutton();
 		addshortsdivs();
@@ -1042,8 +1139,13 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		crosswalk();
@@ -1064,8 +1166,13 @@ function deaacti(buttonnumber)
 		learnprophecydiv.style.display = 'block';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -1079,12 +1186,17 @@ function deaacti(buttonnumber)
 		newsdiv.style.display = 'none';
 		quotesdiv.style.display = 'none';
 		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		lessonsdiv.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		playvid();
@@ -1100,11 +1212,16 @@ function deaacti(buttonnumber)
 		quotesdiv.style.display = 'none';
 		shortsdiv.style.display = 'none';
 		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'block';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -1118,12 +1235,17 @@ function deaacti(buttonnumber)
 		newsdiv.style.display = 'none';
 		quotesdiv.style.display = 'none';
 		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		lessonsdiv.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'block';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 		playvid2();
@@ -1138,12 +1260,17 @@ function deaacti(buttonnumber)
 		newsdiv.style.display = 'none';
 		quotesdiv.style.display = 'none';
 		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		lessonsdiv.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'block';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
 	}
@@ -1156,15 +1283,166 @@ function deaacti(buttonnumber)
 		lessonsbutton.classList.add('active');
 		newsdiv.style.display = 'none';
 		quotesdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
 		shortsdiv.style.display = 'none';
 		lessonsdiv.style.display = 'none';
 		learnprophecydiv.style.display = 'none';
 		longvideoplayerdiv.style.display = 'none';
 		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
 		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
 		islamlayout.style.display = 'block';
+		spacelayout.style.display = 'none';
 		shortstools.style.display = 'none';
 		fabbutton();
+	}
+	else if(buttonnumber == 11)
+	{
+		loc = 11;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'block';
+		shortstools.style.display = 'none';
+		fabbutton();
+	}
+	else if(buttonnumber == 12)
+	{
+		loc = 12;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'block';
+		lessonsdiv.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
+		addnasaarticle();
+	}
+	else if(buttonnumber == 13)
+	{
+		loc = 13;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'block';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
+	}
+	else if(buttonnumber == 14)
+	{
+		loc = 14;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'block';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
+	}
+	else if(buttonnumber == 15)
+	{
+		loc = 15;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'none';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'block';
+		dinolayout.style.display = 'none';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
+	}
+	else if(buttonnumber == 16)
+	{
+		loc = 16;
+		newsbutton.classList.remove('active');
+		quotesbutton.classList.remove('active');
+		shortsbutton.classList.remove('active');
+		lessonsbutton.classList.add('active');
+		newsdiv.style.display = 'none';
+		quotesdiv.style.display = 'none';
+		shortsdiv.style.display = 'none';
+		nasaarticle.style.display = 'none';
+		lessonsdiv.style.display = 'none';
+		learnprophecydiv.style.display = 'none';
+		longvideoplayerdiv.style.display = 'block';
+		unlearndiv.style.display = 'none';
+		unlearndiv2.style.display = 'none';
+		enochlayout.style.display = 'none';
+		climatelayout.style.display = 'none';
+		dinolayout.style.display = 'none';
+		islamlayout.style.display = 'none';
+		spacelayout.style.display = 'none';
+		shortstools.style.display = 'none';
+		fabbutton();
+		playvid2();
 	}
 }
 window.onbeforeunload = function ()
@@ -1322,11 +1600,39 @@ plusbutton.addEventListener("click", e=> {
 	else if(loc == 9)
 	{
 	    player.pause();
-	    deaacti(6);
+	    deaacti(13);
 	}
 	else if(loc == 10)
 	{
 	    deaacti(0);
+	}
+	else if(loc == 11)
+	{
+	    deaacti(6);
+	}
+	else if(loc == 12)
+	{
+	    deaacti(11);
+	}
+	else if(loc == 13)
+	{
+		player.pause();
+		deaacti(3);
+	}
+	else if(loc == 14)
+	{
+		player.pause();
+		deaacti(6);
+	}
+	else if(loc == 15)
+	{
+		player.pause();
+		deaacti(6);
+	}
+	else if(loc == 16)
+	{
+		player.pause();
+		deaacti(13);
 	}
 });
 shortsbutton.addEventListener("click", e=> {
@@ -1355,6 +1661,9 @@ prophbutton.addEventListener("click", e=> {
 });
 unlearnbutton.addEventListener("click", e=> {
 	deaacti(6);
+});
+unlearn2button.addEventListener("click", e=> {
+	deaacti(13);
 });
 quotesource.addEventListener("click", e=> {
     if(quotesourcetoggle == 0)
@@ -1478,28 +1787,87 @@ enoch_10.addEventListener("click", e=> {
     currentunlearn = 11;
     deaacti(7);
 });
+dino_1.addEventListener("click", e=> {
+    currentunlearn = 18;
+    deaacti(7);
+});
+dino_2.addEventListener("click", e=> {
+    currentunlearn = 19;
+    deaacti(7);
+});
+dino_3.addEventListener("click", e=> {
+    currentunlearn = 20;
+    deaacti(7);
+});
+dino_4.addEventListener("click", e=> {
+    currentunlearn = 21;
+    deaacti(7);
+});
+dino_5.addEventListener("click", e=> {
+    currentunlearn = 22;
+    deaacti(7);
+});
 islam_1.addEventListener("click", e=> {
     currentunlearn = 12;
-    deaacti(7);
+    deaacti(16);
 });
 islam_2.addEventListener("click", e=> {
     currentunlearn = 13;
-    deaacti(7);
+    deaacti(16);
 });
 islam_3.addEventListener("click", e=> {
     currentunlearn = 14;
-    deaacti(7);
+    deaacti(16);
 });
 islam_4.addEventListener("click", e=> {
     currentunlearn = 15;
-    deaacti(7);
+    deaacti(16);
 });
 islam_5.addEventListener("click", e=> {
     currentunlearn = 16;
-    deaacti(7);
+    deaacti(16);
 });
 islam_6.addEventListener("click", e=> {
     currentunlearn = 17;
+    deaacti(16);
+});
+space_1.addEventListener("click", e=> {
+    deaacti(12);
+});
+space_2.addEventListener("click", e=> {
+	currentunlearn = 27;
+    deaacti(7);
+});
+space_3.addEventListener("click", e=> {
+	currentunlearn = 28;
+    deaacti(7);
+});
+space_4.addEventListener("click", e=> {
+	currentunlearn = 29;
+    deaacti(7);
+});
+space_5.addEventListener("click", e=> {
+	currentunlearn = 30;
+    deaacti(7);
+});
+space_6.addEventListener("click", e=> {
+	currentunlearn = 31;
+    deaacti(7);
+});
+climate_1.addEventListener("click", e=> {
+	currentunlearn = 23;
+    deaacti(7);
+});
+climate_2.addEventListener("click", e=> {
+	currentunlearn = 24;
+    deaacti(7);
+});
+climate_3.addEventListener("click", e=> {
+	currentunlearn = 25;
+    deaacti(7);
+});
+climate_4.addEventListener("click", e=> {
+	currentunlearn = 26;
     deaacti(7);
 });
 day1_1.addEventListener("click", e=> {
@@ -1819,7 +2187,9 @@ evolution.addEventListener("click", e=> {
     currentunlearn = 1;
     deaacti(7);
 });
-
+dinosaurs.addEventListener("click", e=> {
+    deaacti(14);
+});
 enoch.addEventListener("click", e=> {
     deaacti(8);
 });
@@ -1827,6 +2197,23 @@ enoch.addEventListener("click", e=> {
 islam.addEventListener("click", e=> {
     deaacti(9);
 });
+
+space.addEventListener("click", e=> {
+    deaacti(11);
+});
+
+climate.addEventListener("click", e=> {
+    deaacti(15);
+});
+
+function addnasaarticle()
+{
+	nasaarticlelist.innerHTML = "";
+	var bodyref = httpGetnewsarticle('1');
+	var temp = document.createElement('div');
+	temp.innerHTML = bodyref;
+	nasaarticlelist.appendChild(temp);
+}
 
 function playvid2()
 {
