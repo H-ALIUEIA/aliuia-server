@@ -27,7 +27,7 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ADMIN_ENABLED = DEBUG
 
 ALLOWED_HOSTS = ['*']
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'pages',
     'api',
     'drf_multiple_model',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,524 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+  <!-- styles -->
+  <link rel="stylesheet" href='{% static "css/vendor/font-awesome.min.css" %}'>
+  <link rel="stylesheet" href='{% static "css/vendor/simple-line-icons.css" %}'>
+  <link rel="stylesheet" href='{% static "css/vendor/magnific-popup.css" %}'>
+  <link rel="stylesheet" href='{% static "css/vendor/jquery.range.css" %}'>
+  <link rel="stylesheet" href='{% static "css/style.min.css" %}'>
+  <!-- favicon -->
+  <link rel="icon" href="favicon.ico">
+  <title>Σωματική Προετοιμασία για τις Έσχατες Ημέρες</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+
+
+<style>
+        :root {
+            --color-background: #ffffff;
+            --color-text-primary: #343a40;
+            --color-text-secondary: #6c757d;
+            --color-primary-cta: #0d6efd;
+            --color-primary-cta-hover: #0b5ed7;
+            --color-border-subtle: #e9ecef;
+            
+            --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-weight-normal: 400;
+            --font-weight-bold: 600;
+
+            --navbar-height: 70px;
+            --navbar-padding: 1rem;
+            --container-width: 1140px;
+            --border-radius: 0.25rem;
+            --transition-speed: 0.2s;
+        }
+        .navbar {
+            position: sticky;
+            top: 0;
+            
+            height: var(--navbar-height);
+            display: flex;
+            align-items: center;
+            background-color: var(--color-background);
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--navbar-padding);
+        }
+        .navbar__brand {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+        }
+    </style>
+<header class="navbar">
+        <div class="navbar__container">
+            <a href="{% url 'home_redirect' %}" class="navbar__brand">Η Αλήθεια</a>
+        </div>
+    </header>
+
+
+  <!-- SECTION WRAP -->
+  <div class="section-wrap">
+    <!-- SECTION -->
+    <div class="section no-title">
+      <!-- CONTENT -->
+      <div class="content right">
+        <!-- FILTER HEADER -->
+        <div class="filter-header" style="display: block; height: 64px;">
+
+          <!-- FILTER OPTIONS -->
+          <div class="flex-content" style="display: flex; flex-flow: wrap; align-items: stretch; justify-content: center; height: 100%;">
+          <button class="flex-item" style="display: inline-flex; flex-flow: column wrap; align-items: stretch; justify-content: center; width: 49%; margin-right: 1%; background-color: #FFE100;">Αντικείμενα</button>
+          <button class="flex-item" style="width: 49%; height: 100%; display: inline-flex; align-items: stretch; justify-content: center; flex-flow: column wrap; margin-left: 1%;" onclick="window.location.href='{% url 'books' %}'">Αρχεία</button>
+          </div>
+        </div>
+        <div class="product-list v2">
+          {% for item in object_list %}
+          <div class="product-list-item">
+            <a href="{{ item.source }}">
+              <figure class="product-img">
+                <img src="{{ item.image }}" alt="product01"/>
+              </figure>
+            </a>
+            
+            <div class="product-list-item-info">
+              <a href="{{ item.source }}"><h6 class="title medium" {% if request.Android %} style="margin-right:0px;" {% else %} style="margin-right:10px;" {% endif %}>{{ item.title }}</h6></a>
+              <p class="product-description medium">{{ item.store }}</p>
+              {% if item.importance == "MUSTHAVE" %}
+                  {% if request.Android %}
+                  	<center><p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;text-justify:center;width:85px;text-align:center;background-color: #FFA600; color: #FFFFFF;" class="product-description">Συμαντικό</p></center>
+                  {% else %}
+                  	<p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;width:85px;text-justify:center;text-align:center;background-color: #FFA600; color: #FFFFFF;" class="product-description">Συμαντικό</p>
+                  {% endif %}
+              {% endif%}
+              {% if item.importance == "SECONDARY" %}
+                  {% if request.Android %}
+                  	<center><p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;text-justify:center;width:85px;text-align:center;background-color: #00FF00; color: #FFFFFF;" class="product-description">Δευτερεύων</p></center>
+                  {% else %}
+                  	<p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;width:85px;text-justify:center;text-align:center;background-color: #00FF00; color: #FFFFFF;" class="product-description">Δευτερεύων</p>
+                  {% endif %}
+              {% endif%}
+              {% if item.importance == "THIRD" %}
+                  {% if request.Android %}
+                  	<center><p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;text-justify:center;width:75px;text-align:center;background-color: #FF0000; color: #FFFFFF;" class="product-description">Επιπλέων</p></center>
+                  {% else %}
+                  	<p style="padding-top:3px;padding-bottom:3px;padding-left:0px;padding-right:0px;width:75px;text-justify:center;text-align:center;background-color: #FF0000;color: #FFFFFF;" class="product-description">Επιπλέων</p>
+                  {% endif %}
+              {% endif%}
+              <h6 class="product-price medium">~{{ item.price }}€</h6>
+              <a href="javascript:onclick(alert('{{ item.description }}'))"><p class="product-description-preview">{{ item.description }}</p></a>
+              <!-- BUTTON LIST -->
+              <div class="button-list wrap-4">
+                <a style="background-color: #FFFFFFFF;" class="button square"></a>
+                <!-- BUTTON -->
+                <a href="{{ item.source }}" class="button square">
+                  <!-- SVG CART -->
+                  <svg class="svg-cart-small">
+                    <use xlink:href="#svg-cart-small"></use>
+                  </svg>
+                  <!-- /SVG CART -->
+                </a>
+                <!-- /BUTTON -->
+
+                <!-- BUTTON -->
+                <a href="javascript:onclick(alert('{{ item.alternatives }}'));" class="button square">
+                  <!-- SVG HEART -->
+                  <svg class="svg-burger">
+                    <use xlink:href="#svg-burger"></use>
+                  </svg>
+                  <!-- /SVG HEART -->
+                </a>
+                <!-- /BUTTON -->
+              </div>
+              <!-- /BUTTON LIST -->
+            </div>
+            <!-- /PRODUCT LIST ITEM INFO -->
+          </div>
+          <!-- /PRODUCT LIST ITEM -->
+          {% endfor %}
+        </div>
+        <!-- /PRODUCT LIST -->
+
+        <!-- PAGER WRAP -->
+        <div class="pager-wrap">
+          <!-- PAGER -->
+          <ul class="pager">
+            <!-- PAGER ITEM -->
+            <li class="pager-item">
+              {% if page_obj.has_previous %}
+              	{% if cat == None %}
+		          <a href="?page={{ page_obj.previous_page_number }}">
+		            <!-- SVG ARROW -->
+		            <svg class="svg-arrow medium inverted">
+		              <use xlink:href="#svg-arrow"></use>
+		            </svg>
+		            <!-- /SVG ARROW -->
+		          </a>
+		        {% else %}
+		          <a href="?page={{ page_obj.previous_page_number }}&category={{ cat }}">
+		            <!-- SVG ARROW -->
+		            <svg class="svg-arrow medium inverted">
+		              <use xlink:href="#svg-arrow"></use>
+		            </svg>
+		            <!-- /SVG ARROW -->
+		          </a>
+		        {% endif %}
+		      {% endif %}
+            </li>
+            {% for i in "x"|rjust:page_obj.paginator.num_pages %}
+            	{% if forloop.counter == page_obj.number %}
+		            <li class="pager-item selected"><a href="#">{{ forloop.counter }}</a></li>
+		        {% else %}
+		        	{% if cat == None %}
+			        	<li class="pager-item"><a href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+			        {% else %}
+			        	<li class="pager-item"><a href="?page={{ forloop.counter }}&category={{ cat }}">{{ forloop.counter }}</a></li>
+			        {% endif %}
+		        {% endif %}
+	        {% endfor %}
+            <li class="pager-item">
+              {% if page_obj.has_next %}
+              	{% if cat == None %}
+		          <a href="?page={{ page_obj.next_page_number }}">
+		            <!-- SVG ARROW -->
+		            <svg class="svg-arrow medium">
+		              <use xlink:href="#svg-arrow"></use>
+		            </svg>
+		            <!-- /SVG ARROW -->
+		          </a>
+		        {% else %}
+		          <a href="?page={{ page_obj.next_page_number }}&category={{ cat }}">
+		            <!-- SVG ARROW -->
+		            <svg class="svg-arrow medium">
+		              <use xlink:href="#svg-arrow"></use>
+		            </svg>
+		            <!-- /SVG ARROW -->
+		          </a>
+		        {% endif %}
+		      {% endif %}
+            </li>
+            <!-- /PAGER ITEM -->
+          </ul>
+          <!-- /PAGER -->
+        </div>
+        <!-- /PAGER WRAP -->
+      </div>
+      <!-- /CONTENT -->
+
+      <!-- SIDEBAR -->
+      <div class="sidebar left">
+        <!-- SIDEBAR WIDGET -->
+        <div class="sidebar-widget">
+          <h2 class="subsection-title">κατηγοριες</h2>
+          <hr class="line-separator">
+          <!-- WIDGET DROPDOWN -->
+          <ul class="widget-dropdown">
+            {% if cat == None %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1">Όλα</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1">Όλα</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Αποθηκευτικός χώρος" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Αποθηκευτικός χώρος">Αποθηκευτικός χώρος</a>
+		        </li>
+		    {% else %}
+		        <li class="widget-dropdown-item">
+		          <a href="?page=1&category=Αποθηκευτικός χώρος">Αποθηκευτικός χώρος</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Νερό" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Νερό">Νερό</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Νερό">Νερό</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Εργαλεία" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Εργαλεία">Εργαλεία</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Εργαλεία">Εργαλεία</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Καταφύγιο" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Καταφύγιο">Καταφύγιο</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Καταφύγιο">Καταφύγιο</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Φωτιά" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Φωτιά">Φωτιά</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Φωτιά">Φωτιά</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Ηλεκτρονικά" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Ηλεκτρονικά">Ηλεκτρονικά</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Ηλεκτρονικά">Ηλεκτρονικά</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Ύπνος" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Ύπνος">Ύπνος</a>
+		        </li>
+		    {% else %}
+				<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Ύπνος">Ύπνος</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Ενδυμασία" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Ενδυμασία">Ενδυμασία</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Ενδυμασία">Ενδυμασία</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Ψάρεμα" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Ψάρεμα">Ψάρεμα</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Ψάρεμα">Ψάρεμα</a>
+		        </li>
+		    {% endif %}
+		    {% if cat == "Καθημερινότητα" %}
+		        <li class="widget-dropdown-item">
+		          <a style="color:#FFA600" href="?page=1&category=Καθημερινότητα">Καθημερινότητα</a>
+		        </li>
+		    {% else %}
+		    	<li class="widget-dropdown-item">
+		          <a href="?page=1&category=Καθημερινότητα">Καθημερινότητα</a>
+		        </li>
+		    {% endif %}
+		    <br><br>
+		    <h2 class="subsection-title">ιεραρχια</h2>
+            <hr class="line-separator"><br>
+		    <p>1 = Συμαντικό</p><br>
+		    <p>2 = Δευτερεύων</p><br>
+		    <p>3 = Επιπλέων</p><br>
+          </ul>
+        </div>
+      </div>
+      <!-- /SIDEBAR -->
+    </div>
+    <!-- /SECTION -->
+  </div>
+<!-- SVG ICONS -->
+  <!-- SVG ARROW -->
+  <svg style="display: none;">
+  	<symbol id="svg-arrow" viewBox="0 0 3.923 6.64014" preserveAspectRatio="xMinYMin meet">
+  		<path d="M3.711,2.92L0.994,0.202c-0.215-0.213-0.562-0.213-0.776,0c-0.215,0.215-0.215,0.562,0,0.777l2.329,2.329
+  			L0.217,5.638c-0.215,0.215-0.214,0.562,0,0.776c0.214,0.214,0.562,0.215,0.776,0l2.717-2.718C3.925,3.482,3.925,3.135,3.711,2.92z"/>
+  	</symbol>
+  </svg>
+  <!-- /SVG ARROW -->
+
+  <!-- SVG MAG GLASS -->
+  <svg style="display: none;">
+    <symbol id="svg-mag-glass" viewBox="0 0 12 12" preserveAspectRatio="xMinYMin meet">
+      <path d="M3.094,6.916c-0.275-0.269-0.482-0.573-0.62-0.912C2.336,5.666,2.267,5.32,2.267,4.968
+      	c0-0.351,0.069-0.699,0.207-1.041c0.138-0.344,0.345-0.65,0.62-0.92c0.275-0.269,0.587-0.468,0.934-0.599
+      	c0.347-0.13,0.702-0.195,1.066-0.195s0.72,0.064,1.067,0.195c0.346,0.131,0.657,0.331,0.933,0.599c0.275,0.27,0.482,0.576,0.62,0.92
+      	c0.139,0.342,0.207,0.69,0.207,1.041c0,0.353-0.068,0.698-0.207,1.036c-0.138,0.339-0.345,0.644-0.62,0.912
+      	c-0.275,0.27-0.587,0.471-0.933,0.605C5.813,7.657,5.458,7.724,5.094,7.724s-0.72-0.066-1.066-0.202
+      	C3.681,7.387,3.369,7.186,3.094,6.916z M1.494,1.443C0.996,1.93,0.622,2.479,0.374,3.092C0.125,3.705,0,4.328,0,4.962
+      	s0.125,1.257,0.374,1.87c0.248,0.611,0.622,1.161,1.12,1.648c0.399,0.391,0.844,0.703,1.333,0.938
+      	c0.488,0.234,0.995,0.391,1.52,0.469c0.525,0.078,1.052,0.074,1.58-0.013C6.456,9.786,6.961,9.621,7.44,9.379l2.294,2.241
+      	c0.133,0.13,0.28,0.226,0.44,0.286c0.159,0.061,0.326,0.091,0.5,0.091c0.173,0,0.34-0.03,0.5-0.091s0.307-0.156,0.439-0.286
+      	c0.134-0.13,0.231-0.274,0.293-0.431c0.063-0.156,0.094-0.318,0.094-0.488s-0.031-0.332-0.094-0.488
+      	c-0.062-0.157-0.159-0.301-0.293-0.431L9.401,7.619C9.712,7.143,9.93,6.63,10.055,6.082c0.124-0.547,0.157-1.094,0.1-1.641
+      	c-0.058-0.547-0.209-1.08-0.453-1.596c-0.245-0.517-0.58-0.983-1.007-1.401C8.196,0.967,7.634,0.605,7.008,0.363
+      	C6.381,0.119,5.743-0.003,5.094-0.003S3.808,0.119,3.181,0.363C2.554,0.605,1.991,0.967,1.494,1.443z"/>
+    </symbol>
+  </svg>
+  <!-- /SVG MAG GLASS -->
+
+  <!-- SVG CROSS -->
+  <svg style="display: none;">
+   <symbol id="svg-cross" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet">
+      <g>
+      	<g>
+      		<polygon fill-rule="evenodd" clip-rule="evenodd" points="9.949,1.465 8.535,0.051 5,3.586 1.465,0.051
+      			0.051,1.465 3.586,5 0.051,8.535 1.465,9.949 5,6.414 8.535,9.949 9.949,8.535 6.414,5 		"/>
+      	</g>
+      </g>
+    </symbol>
+  </svg>
+  <!-- /SVG CROSS -->
+
+  <!-- SVG CART -->
+  <svg style="display: none;">
+   <symbol id="svg-cart" viewBox="0 0 22 18" preserveAspectRatio="xMinYMin meet">
+      <g>
+      	<g>
+      		<path fill-rule="evenodd" clip-rule="evenodd" d="M16.991,13.991c-1.106,0-2.003,0.896-2.003,2.003s0.896,2.003,2.003,2.003
+      			s2.003-0.896,2.003-2.003S18.098,13.991,16.991,13.991z M8.012,13.991c-1.105,0-2.003,0.896-2.003,2.003s0.897,2.003,2.003,2.003
+      			c1.106,0,2.003-0.896,2.003-2.003S9.118,13.991,8.012,13.991z M5,2V1c0-0.552-0.447-1-1-1H1C0.447,0,0,0.448,0,1v1
+      			c0,0.553,0.447,1,1,1h2.182L5,13h15l2-11H5z M18.331,11H6.669L5.396,4h14.207L18.331,11z"/>
+      	</g>
+      </g>
+      <rect x="3.734" fill-rule="evenodd" clip-rule="evenodd" width="1.266" height="3"/>
+    </symbol>
+  </svg>
+  <!-- /SVG CART -->
+
+  <!-- SVG CHECK -->
+  <svg style="display: none;">
+    <symbol id="svg-check" viewBox="0 0 20 16" preserveAspectRatio="xMinYMin meet">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M19.692,3.398L7.764,15.669c-0.412,0.424-1.08,0.424-1.491,0
+    	L0.308,9.534C-0.104,9.11-0.104,8.423,0.308,8l1.491-1.534c0.412-0.424,1.08-0.424,1.491,0l3.728,3.834L16.71,0.33
+    	c0.412-0.423,1.08-0.423,1.491,0l1.491,1.534C20.104,2.288,20.104,2.975,19.692,3.398z"/>
+    </symbol>
+  </svg>
+  <!-- /SVG CHECK -->
+
+  <!-- SVG STAR -->
+  <svg style="display: none;">
+    <symbol id="svg-star" viewBox="0 0 15 14" preserveAspectRatio="xMinYMin meet">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5-0.002l2.473,4.399L15,5.345l-3.5,3.667l0.636,4.985
+    	L7.5,11.863l-4.635,2.134L3.5,9.012L0,5.345l5.028-0.948L7.5-0.002"/>
+    </symbol>
+  </svg>
+  <!-- /SVG STAR -->
+
+  <!-- SVG CART SMALL -->
+  <svg style="display: none;">
+    <symbol id="svg-cart-small" viewBox="0 0 16 13" preserveAspectRatio="xMinYMin meet">
+      <g>
+      	<g>
+      		<path fill-rule="evenodd" clip-rule="evenodd" d="M12.49,10.012c-0.826,0-1.495,0.669-1.495,1.493
+      			c0,0.825,0.669,1.494,1.495,1.494s1.495-0.669,1.495-1.494C13.985,10.681,13.316,10.012,12.49,10.012z M5.497,10.012
+      			c-0.826,0-1.495,0.669-1.495,1.493c0,0.825,0.669,1.494,1.495,1.494c0.825,0,1.495-0.669,1.495-1.494
+      			C6.992,10.681,6.322,10.012,5.497,10.012z M4,1.001v-1H1c-0.553,0-1,0.448-1,1s0.447,1,1,1h1.25l1.75,7h10l2-8H4z M12.438,7.001
+      			H5.561l-1-4h8.877L12.438,7.001z"/>
+      	</g>
+      </g>
+    </symbol>
+  </svg>
+  <!-- /SVG CART SMALL -->
+
+  <!-- SVG HEART -->
+  <svg style="display: none;">
+    <symbol id="svg-heart" viewBox="0 0 14 12" preserveAspectRatio="xMinYMin meet">
+      <path d="M10.043,1.998c0.55,0,0.95,0.167,1.381,0.577c0.371,0.353,0.575,0.813,0.575,1.297
+      	c0,0.484-0.204,0.945-0.591,1.313C11.384,5.208,11.34,5.25,7.002,9.705C5.717,8.346,2.975,5.451,2.576,5.071
+      	C2.205,4.719,2,4.258,2,3.774s0.204-0.943,0.576-1.296C2.823,2.243,3.178,2.003,3.93,2.003c0.209,0,0.802,0.225,1.702,1.069
+      	l1.39,1.303l1.369-1.325C9.213,2.255,9.858,1.998,10.043,1.998 M10.043-0.002C9.011-0.002,7.859,0.782,7,1.613
+      	c-0.887-0.832-2.003-1.61-3.07-1.61c-1.045,0-1.965,0.297-2.731,1.025c-1.598,1.517-1.598,3.976,0,5.493
+      	c0.456,0.434,4.883,5.121,4.883,5.121c0.252,0.24,0.583,0.359,0.914,0.359c0.33,0,0.66-0.119,0.912-0.359
+      	c0,0,4.843-4.974,4.895-5.024c1.597-1.517,1.597-3.977,0-5.494C12.009,0.372,11.123-0.002,10.043-0.002L10.043-0.002z"/>
+    </symbol>
+  </svg>
+  <!-- /SVG HEART -->
+
+  <!-- SVG BURGER -->
+  <svg style="display: none;">
+    <symbol id="svg-burger" viewBox="0 0 22 14" preserveAspectRatio="xMinYMin meet">
+      <g>
+      	<g>
+      		<path fill-rule="evenodd" clip-rule="evenodd" d="M1,2h20c0.553,0,1-0.448,1-1s-0.447-1-1-1H1C0.448,0,0,0.448,0,1
+      			S0.448,2,1,2z M21,6H1C0.448,6,0,6.448,0,7c0,0.553,0.448,1,1,1h20c0.553,0,1-0.447,1-1C22,6.448,21.553,6,21,6z M21,12H1
+      			c-0.552,0-1,0.447-1,1s0.448,1,1,1h20c0.553,0,1-0.447,1-1S21.553,12,21,12z"/>
+      	</g>
+      </g>
+    </symbol>
+  </svg>
+  <!-- /SVG BURGER -->
+
+  <!-- SVG PLUS -->
+  <svg style="display: none;">
+  	<symbol id="svg-plus" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet">
+  		<rect x="4" width="2" height="10"/>
+  		<rect y="4" width="10" height="2"/>
+  	</symbol>
+  </svg>
+  <!-- /SVG PLUS -->
+
+  <!-- SVG MINUS -->
+  <svg style="display: none;">
+  	<symbol id="svg-minus" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet">
+  		<rect y="4" width="10" height="2"/>
+  	</symbol>
+  </svg>
+  <!-- /SVG MINUS -->
+
+  <!-- SVG GRID -->
+  <svg style="display: none;">
+   <symbol id="svg-grid" viewBox="0 0 16 16" preserveAspectRatio="xMinYMin meet">
+      <g>
+      	<g>
+      		<path fill-rule="evenodd" clip-rule="evenodd" d="M0,6h6V0H0V6z M10,0v6h6V0H10z M0,16h6v-6H0V16z M10,16h6v-6h-6
+      			V16z"/>
+      	</g>
+      </g>
+    </symbol>
+  </svg>
+  <!-- /SVG GRID -->
+
+  <!-- SVG LIST -->
+  <svg style="display: none;">
+   <symbol id="svg-list" viewBox="0 0 16 14" preserveAspectRatio="xMinYMin meet">
+     <g>
+       <g>
+         <path fill-rule="evenodd" clip-rule="evenodd" d="M6,0v2h10V0H6z M6,8h10V6H6V8z M6,14h10v-2H6V14z M0,2h4V0H0V2z
+            M0,8h4V6H0V8z M0,14h4v-2H0V14z"/>
+       </g>
+      </g>
+    </symbol>
+  </svg>
+  <!-- /SVG LIST -->
+<!-- /SVG ICONS -->
+
+<!-- jQuery -->
+<script src='{% static "js/vendor/jquery-3.1.0.min.js" %}'></script>
+<!-- magnificPopup -->
+<script src='{% static "js/vendor/jquery.magnific-popup.min.js" %}'></script>
+<!-- imgLiquid -->
+<script src='{% static "js/vendor/imgLiquid-min.js" %}'></script>
+<!-- jRange -->
+<script src='{% static "js/vendor/jquery.range.min.js" %}'></script>
+<!-- liquid -->
+<script src='{% static "js/liquid.js" %}'></script>
+<!-- dropdowns -->
+<script src='{% static "js/dropdowns.js" %}'></script>
+<!-- popups -->
+<script src='{% static "js/popups.js" %}'></script>
+<!-- range -->
+<script src='{% static "js/range.js" %}'></script>
+</body>
+</html>

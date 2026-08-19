@@ -75,3 +75,39 @@ class NotificationsModel(models.Model):
     @property
     def source(self):
         return self.quotesource.source
+        
+Importance_Categories = (
+    ("MUSTHAVE","MUSTHAVE"),
+    ("SECONDARY","SECONDARY"),
+	("THIRD","THIRD"),
+)
+
+General_Categories = (
+	("Αποθηκευτικός χώρος","Αποθηκευτικός χώρος"),
+	("Νερό","Νερό"),
+	("Εργαλεία","Εργαλεία"),
+	("Καταφύγιο","Καταφύγιο"),
+	("Φωτιά","Φωτιά"),
+	("Ηλεκτρονικά","Ηλεκτρονικά"),
+	("Ύπνος","Ύπνος"),
+	("Ενδυμασία","Ενδυμασία"),
+	("Ψάρεμα","Ψάρεμα"),
+	("Καθημερινότητα","Καθημερινότητα"),
+)
+
+class ItemModel(models.Model):
+    title = models.CharField(max_length=1000)
+    store = models.CharField(max_length=1000)
+    description = models.CharField(max_length=10000)
+    source = models.CharField(max_length=1000)
+    price = models.IntegerField()
+    alternatives = models.CharField(max_length=1000)
+    importance = models.CharField(max_length=1000, choices=(Importance_Categories))
+    category = models.CharField(max_length=1000, choices=(General_Categories))
+    image = models.CharField(max_length=1000)
+    
+class BookModel(models.Model):
+    title = models.CharField(max_length=1000)
+    description = models.CharField(max_length=10000)
+    source = models.CharField(max_length=1000)
+    image = models.CharField(max_length=1000)
