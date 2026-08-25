@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel
+from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel, PrepModel
 from .models import ArticleModel, ArtListModel
 
 class QuotesSerializer(serializers.ModelSerializer):
@@ -45,6 +45,11 @@ class LevelsListSerializer(serializers.ModelSerializer):
 class ProphecyLessonsSerializer(serializers.ModelSerializer):
  class Meta:
   model = ProphecyLessonsModel
+  fields = '__all__'
+  
+class PrepSerializer(serializers.ModelSerializer):
+ class Meta:
+  model = PrepModel
   fields = '__all__'
   
 class UnlearnSerializer(serializers.ModelSerializer):

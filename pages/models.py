@@ -65,6 +65,10 @@ class ProphecyLessonsModel(models.Model):
 class UnlearnModel(models.Model):
     videourl = models.CharField(max_length=1000)
     sources = models.JSONField()
+    
+class PrepModel(models.Model):
+    videourl = models.CharField(max_length=1000)
+    sources = models.JSONField()
 
 class NotificationsModel(models.Model):
     title = models.CharField(max_length=1000)

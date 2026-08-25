@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel, ItemModel, BookModel
+from .models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel, ItemModel, BookModel, PrepModel
 
 admin.site.register(QuotesModel)
 admin.site.register(ShortsModel)
@@ -11,5 +11,6 @@ admin.site.register(ProphecyLessonsModel)
 admin.site.register(UnlearnModel)
 admin.site.register(ItemModel)
 admin.site.register(BookModel)
+admin.site.register(PrepModel)
 
 # Register your models here.

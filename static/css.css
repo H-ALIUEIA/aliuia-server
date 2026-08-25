@@ -117,6 +117,17 @@ dialog[open]::backdrop {
     height: 20px;
     width: 20px;
 }
+.card2 {
+  margin-top: 25px;
+  border-radius: 25px;
+  background-color: #FF0000;
+  padding: 20px;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 90vw;
+  height: auto;
+}
 .card3 {
   margin-top: 25px;
   border-radius: 25px;

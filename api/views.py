@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel
+from pages.models import QuotesModel, ShortsModel, VideosModel, LevelsModel, NotificationsModel, LevelsList, ProphecyLessonsModel, UnlearnModel, PrepModel
 from .models import ArticleModel, ArtListModel
-from .serializer import QuotesSerializer, ShortsSerializer, VideosSerializer, LevelsSerializer, NotificationsSerializer, LevelsListSerializer, ProphecyLessonsSerializer, UnlearnSerializer, ArtListSerializer, ArticleSerializer
+from .serializer import QuotesSerializer, ShortsSerializer, VideosSerializer, LevelsSerializer, NotificationsSerializer, LevelsListSerializer, ProphecyLessonsSerializer, UnlearnSerializer, ArtListSerializer, ArticleSerializer, PrepSerializer
 from random import choice
 from django.http import FileResponse
 from django.conf import settings
@@ -37,6 +37,12 @@ def get_article(request, pk):
 def unlearn(request,pk):
  unlearnmodel = UnlearnModel.objects.all().filter(id=pk)
  serializer = UnlearnSerializer(unlearnmodel, many=True)
+ return Response(serializer.data)
+ 
+@api_view(['GET'])
+def prep(request,pk):
+ prepmodel = PrepModel.objects.all().filter(id=pk)
+ serializer = PrepSerializer(prepmodel, many=True)
  return Response(serializer.data)
 
 @api_view(['GET'])

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_quote, get_quote_num, get_short, get_short_category, getnotificationupdate, get_version, get_videos, get_level_num, download_db, get_notifications, get_level_list, get_prophecy_lesson, unlearn, get_article_list, get_article
+from .views import get_quote, get_quote_num, get_short, get_short_category, getnotificationupdate, get_version, get_videos, get_level_num, download_db, get_notifications, get_level_list, get_prophecy_lesson, unlearn, get_article_list, get_article, prep
 
 urlpatterns = [
     path("videos/", get_videos, name="getvideos"),
@@ -16,5 +16,6 @@ urlpatterns = [
     path("prophecylessons/<int:day>", get_prophecy_lesson, name="getprophecylesson"),
     path("unlearn/<int:pk>", unlearn, name="unlearn"),
     path("articles/", get_article_list, name="getarticles"),
-    path("articles/<int:pk>", get_article, name="getarticle")
+    path("articles/<int:pk>", get_article, name="getarticle"),
+    path("prep/<int:pk>", prep, name="prep")
 ]
