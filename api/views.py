@@ -103,7 +103,7 @@ def get_short(request):
  
 @api_view(['GET'])
 def get_version(request):
- return Response({'version': '11'})
+ return Response({'version': '12'})
  
 @api_view(['GET'])
 def get_level_num(request, pk):
